@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CarBook</string>
+    <string name="vin">VIN</string>
+    <string name="lookup_vin">Lookup Vin</string>
 </resources>

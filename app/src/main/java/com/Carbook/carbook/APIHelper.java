@@ -21,7 +21,7 @@ public class APIHelper {
                 }
                 url += "?format=json";
                 break;
-            case "make/mocel":
+            case "make/model":
                 break;
         }
         try {
