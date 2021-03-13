@@ -9,21 +9,8 @@ import java.util.List;
 
 public class APIHelper {
 
-    final String vinBaseURL = "https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/";
-    private String url = "";
+    public String makeCall(String url) {
 
-    public String makeCall(String method, List<String> params) {
-        switch (method) {
-            case "vin":
-                url += vinBaseURL;
-                for (int i = 0; i < params.size(); i++) {
-                    url += params.get(i);
-                }
-                url += "?format=json";
-                break;
-            case "make/model":
-                break;
-        }
         try {
             URL urlObj = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
@@ -44,5 +31,6 @@ public class APIHelper {
             System.out.println("Error reading HTTP Response: " + ioe);
             return null;
         }
+
     }
 }
