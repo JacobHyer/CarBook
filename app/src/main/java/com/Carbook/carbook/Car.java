@@ -3,7 +3,7 @@ package com.Carbook.carbook;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vehicle {
+public class Car {
     private String make;
     private String model;
     private String year;
@@ -11,7 +11,7 @@ public class Vehicle {
     private int mileage;
     private List<MaintenanceItem> maintenanceItemList;
 
-    public Vehicle(String vin, String make, String model, String year, int mileage) {
+    public Car(String vin, String make, String model, String year, int mileage) {
         this.vin = vin;
         this.make = make;
         this.model = model;
