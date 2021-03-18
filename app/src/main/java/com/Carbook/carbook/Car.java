@@ -1,11 +1,16 @@
 package com.Carbook.carbook;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Car {
+    @SerializedName("Make")
     private String make;
+    @SerializedName("Model")
     private String model;
+    @SerializedName("ModelYear")
     private String year;
     private String vin;
     private int mileage;

@@ -12,8 +12,8 @@
         android:layout_height="63dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="@string/vin"
         android:inputType="textNoSuggestions"
-        android:text="@string/vin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,19 +44,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/VIN_input" />
 
-    <ListView
-        android:layout_width="339dp"
-        android:layout_height="479dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lookupVINButton" />
-
     <Button
-        android:id="@+id/addCarButton"
+        android:id="@+id/saveCarButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:onClick="saveCar"
+        android:text="Save"
         app:layout_constraintBottom_toTopOf="@+id/cancelButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -66,10 +59,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="44dp"
-        android:onClick="cancelAddVehicle"
+        android:onClick="cancelAddCar"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/vehicleDetails"
+        android:layout_width="376dp"
+        android:layout_height="334dp"
+        android:ems="10"
+        android:enabled="false"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/saveCarButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lookupVINButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
