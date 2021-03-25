@@ -7,24 +7,59 @@
     tools:context=".AddCarActivity">
 
     <EditText
+        android:id="@+id/user_mileage"
+        android:layout_width="141dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Mileage"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/mileage_text"
+        app:layout_constraintTop_toBottomOf="@+id/make_spinner" />
+
+    <Spinner
+        android:id="@+id/model_spinner"
+        android:layout_width="141dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/make_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Spinner
+        android:id="@+id/make_spinner"
+        android:layout_width="135dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toStartOf="@+id/model_spinner"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/user_year"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
         android:id="@+id/VIN_input"
         android:layout_width="374dp"
         android:layout_height="63dp"
-        android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="@string/vin"
+        android:hint="VIN"
         android:inputType="textNoSuggestions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/VIN_text" />
+        app:layout_constraintTop_toBottomOf="@+id/add_text" />
 
     <TextView
-        android:id="@+id/VIN_text"
+        android:id="@+id/add_text"
         android:layout_width="183dp"
         android:layout_height="49dp"
         android:layout_marginTop="16dp"
-        android:text="@string/vin"
+        android:text="Add Car"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,9 +71,9 @@
         android:id="@+id/lookupVINButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:onClick="VINLookup"
-        android:text="@string/lookup_vin"
+        android:text="Lookup VIN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,17 +101,114 @@
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/vehicleDetails"
-        android:layout_width="376dp"
-        android:layout_height="334dp"
-        android:ems="10"
-        android:enabled="false"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/saveCarButton"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Don't have the VIN? Lookup by Make/Model below:"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lookupVINButton" />
+
+    <EditText
+        android:id="@+id/user_year"
+        android:layout_width="81dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Year"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/make_spinner"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="370dp"
+        android:layout_height="121dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/saveCarButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="374dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/carImage"
+                android:layout_width="123dp"
+                android:layout_height="122dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constrainedHeight="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/carMileage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/carDescription"
+                android:layout_width="230dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:singleLine="false"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/carImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/carMileage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="#454545"
+                app:layout_constraintStart_toEndOf="@+id/carImage"
+                app:layout_constraintTop_toBottomOf="@+id/carDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/mileage_text"
+        android:layout_width="123dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Enter Mileage:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/make_spinner" />
+
+    <TextView
+        android:id="@+id/miles"
+        android:layout_width="72dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center_vertical"
+        android:text="miles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toEndOf="@+id/user_mileage"
+        app:layout_constraintTop_toBottomOf="@+id/make_spinner" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
