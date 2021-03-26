@@ -26,7 +26,7 @@ public class ModelLookupTask implements Runnable{
         params.add(1, "/modelyear/");
         JSONArray results = nhtsaCall(baseURL, params);
         List<String> models = new ArrayList<>();
-        //Adds first selector "Models" to the list for display purposes
+
         //Iterate through results and add all Model Names to the list
         for (int i = 0; i < results.length(); i++) {
             try {
@@ -37,6 +37,7 @@ public class ModelLookupTask implements Runnable{
                 e.printStackTrace();
             }
         }
+        //Sort models by alphabetical, then add Model as placeholder in the beginning
         Collections.sort(models);
         models.add(0, "Model");
 

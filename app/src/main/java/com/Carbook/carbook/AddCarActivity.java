@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ public class AddCarActivity extends AppCompatActivity {
     private EditText userVIN;
     private EditText userYear;
     private EditText userMileage;
+    private ImageView carImage;
     private TextView carDescription;
     private TextView carMileage;
     private Spinner makeSpinner;
@@ -122,6 +126,21 @@ public class AddCarActivity extends AppCompatActivity {
         newCar.setYear(year);
 
         carDescription.setText(newCar.getYear() + " " + newCar.getMake() + " " + newCar.getModel());
+        getImg(newCar.getMake(), newCar.getModel(), newCar.getYear());
+    }
+    public void getImg(String make, String model, String year) {
+        ImageLookupTask imgTask = new ImageLookupTask(this, newCar);
+        Thread thread2 = new Thread(imgTask, "imgAPI");
+        thread2.start();
+    }
+    public void showImg(String url) {
+        System.out.println(url);
+        ImageView carImg = (ImageView) findViewById(R.id.carImage);
+        if (url.equals("NotFound")) {
+            Picasso.get().load(R.drawable.img_not_found).fit().into(carImg);
+        } else {
+            Picasso.get().load(url).fit().into(carImg);
+        }
     }
     public void saveCar(View view) {
         //TODO: Add ability to send newCar to DashboardActivity (will there be a central database?)

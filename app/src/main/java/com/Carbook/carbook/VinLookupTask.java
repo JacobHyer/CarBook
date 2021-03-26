@@ -48,8 +48,7 @@ public class VinLookupTask implements Runnable {
                 return values;
             }
             JSONObject json = new JSONObject(data);
-            JSONArray results = json.getJSONArray("Results");
-            values = results.getJSONObject(0);
+            values = json.getJSONArray("Results").getJSONObject(0);
         } catch (JSONException e) {
             e.printStackTrace();
         }

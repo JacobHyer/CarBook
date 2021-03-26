@@ -49,9 +49,9 @@
         android:ems="10"
         android:hint="VIN"
         android:inputType="textNoSuggestions"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/lookupVINButton"
         app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/lookupVINButton"
         app:layout_constraintTop_toBottomOf="@+id/add_text" />
 
     <TextView
@@ -62,9 +62,9 @@
         android:text="Add Car"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/VIN_input"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/VIN_input"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -74,31 +74,33 @@
         android:layout_marginTop="12dp"
         android:onClick="VINLookup"
         android:text="Lookup VIN"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/saveCarButton"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/saveCarButton"
         app:layout_constraintTop_toBottomOf="@+id/VIN_input" />
 
     <Button
         android:id="@+id/saveCarButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
         android:onClick="saveCar"
         android:text="Save"
         app:layout_constraintBottom_toTopOf="@+id/cancelButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/cancelButton"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/cancelButton" />
 
     <Button
         android:id="@+id/cancelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="44dp"
         android:onClick="cancelAddCar"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -146,8 +148,8 @@
             <ImageView
                 android:id="@+id/carImage"
                 android:layout_width="123dp"
-                android:layout_height="122dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constrainedHeight="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/carMileage"
