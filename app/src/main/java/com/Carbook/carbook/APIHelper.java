@@ -29,7 +29,7 @@ public class APIHelper {
             return data.toString();
         } catch (IOException ioe) {
             System.out.println("Error reading HTTP Response: " + ioe);
-            return null;
+            return "404";
         }
 
     }
