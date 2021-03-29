@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -33,6 +34,8 @@ public class AddCarActivity extends AppCompatActivity {
     private AddCarActivity activity;
     private Car newCar;
 
+    DBHelper DB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,9 @@ public class AddCarActivity extends AppCompatActivity {
         carMileage = findViewById(R.id.carMileage);
         modelValues = new ArrayList<>();
         activity = this;
-        newCar = new Car(null,null,null,null,-1);
+        newCar = new Car(null,null,null,null,-1, null);
+
+        DB = new DBHelper(this );
 
         makeSpinner = (Spinner) findViewById(R.id.make_spinner);
         ArrayAdapter<CharSequence> makeAdapter = ArrayAdapter.createFromResource(this,
@@ -140,13 +145,21 @@ public class AddCarActivity extends AppCompatActivity {
             Picasso.get().load(R.drawable.img_not_found).fit().into(carImg);
         } else {
             Picasso.get().load(url).fit().into(carImg);
+            newCar.setImage(url);
         }
     }
     public void saveCar(View view) {
         //TODO: Add ability to send newCar to DashboardActivity (will there be a central database?)
-        Intent intent = new Intent(this, DashboardActivity.class);
-        startActivity(intent);
+
+        Boolean checkInsertData = DB.insertCar(newCar);
+        if (checkInsertData != true)
+            Toast.makeText(AddCarActivity.this, "New Entry Not Inserted", Toast.LENGTH_SHORT).show();
+        else {
+            Intent intent = new Intent(this, DashboardActivity.class);
+            startActivity(intent);
+        }
     }
+
     public void cancelAddCar(View view) {
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
