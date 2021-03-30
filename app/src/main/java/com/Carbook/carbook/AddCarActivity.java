@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.text.WordUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class AddCarActivity extends AppCompatActivity {
     private EditText userYear;
     private EditText userMileage;
     private ImageView carImage;
+    private TextView carName;
     private TextView carDescription;
     private TextView carMileage;
     private Spinner makeSpinner;
@@ -43,8 +46,10 @@ public class AddCarActivity extends AppCompatActivity {
         userVIN = (EditText) findViewById(R.id.VIN_input);
         userYear = (EditText) findViewById(R.id.user_year);
         userMileage = (EditText) findViewById(R.id.user_mileage);
+        carName = findViewById(R.id.carNickname);
         carDescription = findViewById(R.id.carDescription);
         carMileage = findViewById(R.id.carMileage);
+        carImage = findViewById(R.id.carImage);
         modelValues = new ArrayList<>();
         activity = this;
         newCar = new Car(null,null,null,null,-1, null);
@@ -126,6 +131,7 @@ public class AddCarActivity extends AppCompatActivity {
         carMileage.setText(newCar.getMileage() + " miles");
     }
     public void showCar(String make, String model, String year) {
+        make = WordUtils.capitalizeFully(make);
         newCar.setMake(make);
         newCar.setModel(model);
         newCar.setYear(year);
@@ -134,6 +140,7 @@ public class AddCarActivity extends AppCompatActivity {
         getImg(newCar.getMake(), newCar.getModel(), newCar.getYear());
     }
     public void getImg(String make, String model, String year) {
+        //TODO: Review arguments for this function
         ImageLookupTask imgTask = new ImageLookupTask(this, newCar);
         Thread thread2 = new Thread(imgTask, "imgAPI");
         thread2.start();
