@@ -52,7 +52,7 @@ public class AddCarActivity extends AppCompatActivity {
         carImage = findViewById(R.id.carImage);
         modelValues = new ArrayList<>();
         activity = this;
-        newCar = new Car(null,null,null,null,-1, null, null);
+        newCar = new Car(null,null,null,null,-1, -1, null, null);
 
         DB = new DBHelper(this );
 
@@ -136,9 +136,11 @@ public class AddCarActivity extends AppCompatActivity {
 
         //Request code 1 is for entering mileage on new car
         if (requestCode == 1) {
-            newCar.setMileage(intent.getIntExtra("MILEAGE", 0));
-            newCar.setAvgMiles(intent.getIntExtra("AVG_MILEAGE", 0));
-            carMileage.setText(newCar.getMileage() + " miles");
+            newCar.setMileage(intent.getIntExtra("MILEAGE", -1));
+            newCar.setAvgMiles(intent.getIntExtra("AVG_MILEAGE", -1));
+            if (newCar.getMileage() != -1) {
+                carMileage.setText(newCar.getMileage() + " miles");
+            }
         }
     }
     public void showName(String name) {
