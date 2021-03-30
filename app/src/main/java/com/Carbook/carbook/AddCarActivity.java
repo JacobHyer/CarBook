@@ -26,7 +26,7 @@ public class AddCarActivity extends AppCompatActivity {
 
     private EditText userVIN;
     private EditText userYear;
-    private EditText userMileage;
+    private EditText userNickname;
     private ImageView carImage;
     private TextView carName;
     private TextView carDescription;
@@ -45,14 +45,14 @@ public class AddCarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_car);
         userVIN = (EditText) findViewById(R.id.VIN_input);
         userYear = (EditText) findViewById(R.id.user_year);
-        userMileage = (EditText) findViewById(R.id.user_mileage);
+        userNickname = (EditText) findViewById(R.id.user_nickname);
         carName = findViewById(R.id.carNickname);
         carDescription = findViewById(R.id.carDescription);
         carMileage = findViewById(R.id.carMileage);
         carImage = findViewById(R.id.carImage);
         modelValues = new ArrayList<>();
         activity = this;
-        newCar = new Car(null,null,null,null,-1, null);
+        newCar = new Car(null,null,null,null,-1, null, null);
 
         DB = new DBHelper(this );
 
@@ -68,7 +68,7 @@ public class AddCarActivity extends AppCompatActivity {
                 newCar.setMake(parent.getItemAtPosition(position).toString());
                 newCar.setYear(userYear.getText().toString());
                 List<String> makeParams = new ArrayList<>();
-                //Params must be make first then year
+                //Params must be make first then year for ModelLookupTask to work correctly
                 makeParams.add(newCar.getMake());
                 makeParams.add(newCar.getYear());
                 ModelLookupTask modelTask = new ModelLookupTask(activity, makeParams);
@@ -79,7 +79,7 @@ public class AddCarActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) { }
         });
 
-        userMileage.addTextChangedListener(new TextWatcher() {
+        userNickname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
@@ -88,7 +88,7 @@ public class AddCarActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                showMileage(s.toString());
+                showName(s.toString());
             }
         });
     }
@@ -126,9 +126,24 @@ public class AddCarActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
-    public void showMileage(String mileage) {
-        newCar.setMileage(Integer.parseInt(mileage));
-        carMileage.setText(newCar.getMileage() + " miles");
+    public void enterMileage(View view) {
+        Intent intent = new Intent(this, MileageActivity.class);
+        startActivityForResult(intent, 1);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        //Request code 1 is for entering mileage on new car
+        if (requestCode == 1) {
+            newCar.setMileage(intent.getIntExtra("MILEAGE", 0));
+            newCar.setAvgMiles(intent.getIntExtra("AVG_MILEAGE", 0));
+            carMileage.setText(newCar.getMileage() + " miles");
+        }
+    }
+    public void showName(String name) {
+        newCar.setName(name);
+        carName.setText(newCar.getName());
     }
     public void showCar(String make, String model, String year) {
         make = WordUtils.capitalizeFully(make);
@@ -137,10 +152,9 @@ public class AddCarActivity extends AppCompatActivity {
         newCar.setYear(year);
 
         carDescription.setText(newCar.getYear() + " " + newCar.getMake() + " " + newCar.getModel());
-        getImg(newCar.getMake(), newCar.getModel(), newCar.getYear());
+        getImg();
     }
-    public void getImg(String make, String model, String year) {
-        //TODO: Review arguments for this function
+    public void getImg() {
         ImageLookupTask imgTask = new ImageLookupTask(this, newCar);
         Thread thread2 = new Thread(imgTask, "imgAPI");
         thread2.start();
@@ -156,8 +170,6 @@ public class AddCarActivity extends AppCompatActivity {
         }
     }
     public void saveCar(View view) {
-        //TODO: Add ability to send newCar to DashboardActivity (will there be a central database?)
-
         Boolean checkInsertData = DB.insertCar(newCar);
         if (checkInsertData != true)
             Toast.makeText(AddCarActivity.this, "New Entry Not Inserted", Toast.LENGTH_SHORT).show();
@@ -166,7 +178,6 @@ public class AddCarActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
     public void cancelAddCar(View view) {
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);

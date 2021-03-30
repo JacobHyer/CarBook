@@ -7,17 +7,17 @@
     tools:context=".AddCarActivity">
 
     <EditText
-        android:id="@+id/user_mileage"
-        android:layout_width="141dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:id="@+id/user_nickname"
+        android:layout_width="319dp"
+        android:layout_height="46dp"
         android:ems="10"
         android:gravity="center"
-        android:hint="Mileage"
-        android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/mileage_text"
-        app:layout_constraintTop_toBottomOf="@+id/make_spinner" />
+        android:hint="Nickname"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nickname_prompt" />
 
     <Spinner
         android:id="@+id/model_spinner"
@@ -62,6 +62,7 @@
         android:text="Add Car"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/VIN_input"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/VIN_input"
@@ -71,7 +72,7 @@
         android:id="@+id/lookupVINButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:onClick="VINLookup"
         android:text="Look Up VIN"
         app:layout_constraintEnd_toEndOf="@+id/saveCarButton"
@@ -83,7 +84,7 @@
         android:id="@+id/saveCarButton"
         android:layout_width="100dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:onClick="saveCar"
         android:text="Save"
         app:layout_constraintBottom_toTopOf="@+id/cancelButton"
@@ -95,7 +96,7 @@
         android:id="@+id/cancelButton"
         android:layout_width="100dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="8dp"
         android:onClick="cancelAddCar"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -109,10 +110,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Don't have the VIN? Lookup by Make/Model below:"
+        android:textColor="#931010"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lookupVINButton" />
+
+    <TextView
+        android:id="@+id/nickname_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Enter a nickname for your car below:"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/make_spinner" />
 
     <EditText
         android:id="@+id/user_year"
@@ -135,7 +149,7 @@
         android:layout_height="121dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toTopOf="@+id/saveCarButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -162,9 +176,10 @@
                 android:layout_width="230dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
+                android:lines="2"
                 android:maxLines="2"
                 android:singleLine="false"
                 android:textAllCaps="true"
@@ -182,10 +197,10 @@
                 android:layout_width="230dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:lines="1"
+                android:maxLines="1"
                 android:singleLine="false"
                 android:textColor="#000000"
                 android:textSize="18sp"
@@ -201,6 +216,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
+                android:lines="1"
+                android:maxLines="1"
                 android:textColor="#454545"
                 app:layout_constraintStart_toEndOf="@+id/carImage"
                 app:layout_constraintTop_toBottomOf="@+id/carDescription"
@@ -209,30 +226,16 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/mileage_text"
-        android:layout_width="123dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:text="Enter Mileage:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/make_spinner" />
-
-    <TextView
-        android:id="@+id/miles"
-        android:layout_width="72dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center_vertical"
-        android:text="miles"
+    <Button
+        android:id="@+id/mileage_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:onClick="enterMileage"
+        android:text="Enter car's mileage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.023"
-        app:layout_constraintStart_toEndOf="@+id/user_mileage"
-        app:layout_constraintTop_toBottomOf="@+id/make_spinner" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_nickname" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
