@@ -28,7 +28,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        recyclerView =findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
 
         myDB = new DBHelper(DashboardActivity.this);
         id = new ArrayList<>();
@@ -50,7 +50,7 @@ public class DashboardActivity extends AppCompatActivity {
         Cursor cursor = myDB.readAllData();
         if(cursor.getCount() == 0) {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             while (cursor.moveToNext()) {
                 id.add(cursor.getString(0 ));
                 vin.add(cursor.getString(1 ));
@@ -65,6 +65,11 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void addCar (View view) {
         Intent intent = new Intent(this, AddCarActivity.class);
+        startActivity(intent);
+    }
+
+    public void viewCar (View view) {
+        Intent intent = new Intent(this, ViewCarActivity.class);
         startActivity(intent);
     }
 }

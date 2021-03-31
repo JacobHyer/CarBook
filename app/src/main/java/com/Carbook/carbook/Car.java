@@ -19,7 +19,7 @@ public class Car {
     private String name;
     private List<MaintenanceItem> maintenanceItemList;
 
-    public Car(String vin, String make, String model, String year, int mileage, int avg_miles,String image, String name) {
+    public Car(String vin, String make, String model, String year, int mileage, int avg_miles, String image, String name) {
         this.vin = vin;
         this.make = make;
         this.model = model;
