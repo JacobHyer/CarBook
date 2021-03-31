@@ -14,14 +14,20 @@ public class Car {
     private String year;
     private String vin;
     private int mileage;
+    private int avg_miles;
+    private String image;
+    private String name;
     private List<MaintenanceItem> maintenanceItemList;
 
-    public Car(String vin, String make, String model, String year, int mileage) {
+    public Car(String vin, String make, String model, String year, int mileage, int avg_miles,String image, String name) {
         this.vin = vin;
         this.make = make;
         this.model = model;
         this.year = year;
         this.mileage = mileage;
+        this.avg_miles = avg_miles;
+        this.image = image;
+        this.name = name;
         this.maintenanceItemList = new ArrayList<MaintenanceItem>();
     }
 
@@ -41,12 +47,16 @@ public class Car {
         this.model = model;
     }
 
-    public String getYear() {
-        return year;
+    public String getYear() { return year; }
+
+    public void setYear(String year) { this.year = year; }
+
+    public String getImage() {
+        return image;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getVin() {
@@ -63,6 +73,22 @@ public class Car {
 
     public void setMileage(int mileage) {
         this.mileage = mileage;
+    }
+
+    public int getAvgMiles() {
+        return avg_miles;
+    }
+
+    public void setAvgMiles(int avg_miles) {
+        this.avg_miles = avg_miles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void delete() {

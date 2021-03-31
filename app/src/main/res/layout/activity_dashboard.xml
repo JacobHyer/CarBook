@@ -65,6 +65,13 @@
                 tools:text="80,000 mi." />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="373dp"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="23dp"
+            tools:layout_editor_absoluteY="158dp" />
+
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
