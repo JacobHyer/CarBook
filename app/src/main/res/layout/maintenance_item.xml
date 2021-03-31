@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:padding="16dp">
 
     <TextView
         android:id="@+id/tvMaintenanceItemDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:text="Oil Change"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tvMaintenanceItemMileage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="4800 mi."
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemDesc"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
         android:id="@+id/tvMaintenanceItemNotes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Notes"
+        android:layout_marginTop="8dp"
+        android:text="These are some notes about the maintenance."
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemDesc"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemMileage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

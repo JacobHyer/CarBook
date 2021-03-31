@@ -14,18 +14,18 @@ import java.util.List;
 
 public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.MaintenanceViewHolder>{
 
-    private Context context;
-    private ArrayList desc, notes;
+    private List desc, notes, mileage;
 
-    public MaintenanceAdapter(Context context, ArrayList<String> desc, ArrayList<String> notes) {
+    public MaintenanceAdapter(Context context, List<String> desc, List<String> notes, List<Integer> mileage) {
         this.desc = desc;
         this.notes = notes;
+        this.mileage = mileage;
     }
 
     @NonNull
     @Override
     public MaintenanceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.maintenance_item, parent, false);
         return new MaintenanceViewHolder(view);
     }
@@ -34,7 +34,7 @@ public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.
     public void onBindViewHolder(@NonNull MaintenanceViewHolder holder, int position) {
         holder.desc_txt.setText(String.valueOf(desc.get(position)));
         holder.notes_txt.setText(String.valueOf(notes.get(position)));
-
+        holder.mileage_txt.setText(String.valueOf(mileage.get(position)));
     }
 
     @Override
@@ -43,12 +43,13 @@ public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.
     }
 
     public class MaintenanceViewHolder extends RecyclerView.ViewHolder {
-        TextView desc_txt, notes_txt;
+        TextView desc_txt, notes_txt, mileage_txt;
 
         public MaintenanceViewHolder(@NonNull View itemView) {
             super(itemView);
             desc_txt = itemView.findViewById(R.id.tvMaintenanceItemDesc);
             notes_txt = itemView.findViewById(R.id.tvMaintenanceItemNotes);
+            mileage_txt = itemView.findViewById(R.id.tvMaintenanceItemMileage);
         }
 
     }

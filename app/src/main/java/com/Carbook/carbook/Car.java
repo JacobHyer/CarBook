@@ -99,6 +99,10 @@ public class Car {
         maintenanceItemList.add(new MaintenanceItem(description, notes, mileage));
     }
 
+    public List<MaintenanceItem> getMaintenanceItemList() {
+        return maintenanceItemList;
+    }
+
     public void editMaintenanceItem() {
 
     }
