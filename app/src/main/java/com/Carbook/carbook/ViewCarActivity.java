@@ -53,10 +53,12 @@ public class ViewCarActivity extends AppCompatActivity {
         recyclerView.setAdapter(maintenanceAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //TODO: Copy Marcelo's storeDataInArrays method?
-        //TODO: Pull maintenance items from database.
+        //TODO:
+        // Copy Marcelo's storeDataInArrays method?
+        // Pull maintenance items from database.
         // Jake hasn't implemented the maintenance item save pages, so may need to work around this for now....
-        //TODO: Adjust MaintenanceAdapter to use MaintenanceItem objects???
+        // Adjust MaintenanceAdapter to use MaintenanceItem objects???
+        // Not sure what the below commented code is for. Git says I added it, but I don't remember doing that. Definitely possible I copy/pasted it from somewhere while trying to figure something out.
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);

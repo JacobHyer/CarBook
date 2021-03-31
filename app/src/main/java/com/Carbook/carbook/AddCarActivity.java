@@ -48,8 +48,8 @@ public class AddCarActivity extends AppCompatActivity {
         userNickname = (EditText) findViewById(R.id.user_nickname);
         carName = findViewById(R.id.carNickname);
         carDescription = findViewById(R.id.carDescription);
-        carMileage = findViewById(R.id.carMileage);
-        carImage = findViewById(R.id.carImage);
+        carMileage = findViewById(R.id.tvCarMileage);
+        carImage = findViewById(R.id.ivCarImage);
         modelValues = new ArrayList<>();
         activity = this;
         newCar = new Car(null,null,null,null,-1, -1, null, null);
@@ -163,7 +163,7 @@ public class AddCarActivity extends AppCompatActivity {
     }
     public void showImg(String url) {
         System.out.println(url);
-        ImageView carImg = (ImageView) findViewById(R.id.carImage);
+        ImageView carImg = (ImageView) findViewById(R.id.ivCarImage);
         if (url.equals("NotFound")) {
             Picasso.get().load(R.drawable.img_not_found).fit().into(carImg);
         } else {
