@@ -3,6 +3,7 @@ package com.Carbook.carbook;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,6 +118,7 @@ public class Car implements Serializable {
     }
 
     public String getFormattedMileage() {
-        return mileage + " mi.";
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(mileage) + " mi.";
     }
 }
