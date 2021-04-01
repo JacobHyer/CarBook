@@ -10,25 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList id, vin, make, model, year, mileage, image;
+    private List<Car> carList;
+//    private ArrayList id, vin, make, model, year, mileage, image;
+    private RecyclerViewClickInterface recyclerViewClickInterface;
 
-    CustomAdapter(Context context,
-                  ArrayList id,
-                  ArrayList make,
-                  ArrayList model,
-                  ArrayList year,
-                  ArrayList mileage) {
+    public CustomAdapter(Context context, List<Car> carList, RecyclerViewClickInterface recyclerViewClickInterface) {
         this.context = context;
-        this.id = id;
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.mileage = mileage;
+        this.carList = carList;
+        this.recyclerViewClickInterface = recyclerViewClickInterface;
     }
 
     @NonNull
@@ -41,14 +35,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String carDesc = year.get(position) + " " + make.get(position) + " " + model.get(position);
-        holder.desc_txt.setText(carDesc);
-        holder.mileage_txt.setText(String.valueOf(mileage.get(position)));
+        Car c = carList.get(position);
+        holder.desc_txt.setText(c.getFormattedDesc());
+        holder.mileage_txt.setText(c.getFormattedMileage());
     }
 
     @Override
     public int getItemCount() {
-        return id.size();
+        return carList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -60,6 +54,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             cv = itemView.findViewById(R.id.cvCar);
             desc_txt = itemView.findViewById(R.id.tvCarDesc);
             mileage_txt = itemView.findViewById(R.id.tvCarMileage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerViewClickInterface.onItemClick(getAdapterPosition());
+                }
+            });
         }
     }
 }

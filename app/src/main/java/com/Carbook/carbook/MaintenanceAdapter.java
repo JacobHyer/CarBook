@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.MaintenanceViewHolder>{
-
+    //TODO: Convert these ArrayLists to Maintenance objects instead (like we did in Dashboard / CustomAdapter with Cars)
     private List desc, notes, mileage;
 
     public MaintenanceAdapter(Context context, List<String> desc, List<String> notes, List<Integer> mileage) {

@@ -10,14 +10,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
-public class DashboardActivity extends AppCompatActivity {
-
+public class DashboardActivity extends AppCompatActivity implements RecyclerViewClickInterface {
+    public static final String EXTRA_MAKE = "com.Carbook.carbook.MAKE";
+    public static final String EXTRA_MODEL = "com.Carbook.carbook.MODEL";
+    public static final String EXTRA_YEAR = "com.Carbook.carbook.YEAR";
+    public static final String EXTRA_MILEAGE = "com.Carbook.carbook.MILEAGE";
+    private List<Car> carList;
     RecyclerView recyclerView;
-
     DBHelper myDB;
-    ArrayList<String> id, vin, make, model, year, mileage, image;
 
     CustomAdapter customAdapter;
 
@@ -25,40 +29,30 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         recyclerView = findViewById(R.id.rvCar);
-
+        carList = new ArrayList<Car>();
         myDB = new DBHelper(DashboardActivity.this);
-        id = new ArrayList<>();
-        vin = new ArrayList<>();
-        make = new ArrayList<>();
-        model = new ArrayList<>();
-        year = new ArrayList<>();
-        mileage = new ArrayList<>();
-        image = new ArrayList<>();
 
-        storeDataInArrays();
-
-        customAdapter = new CustomAdapter(DashboardActivity.this, id, make, model, year, mileage);
-        recyclerView.setAdapter(customAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(DashboardActivity.this));
-    }
-
-    void storeDataInArrays() {
-        Cursor cursor = myDB.readAllData();
+        Cursor cursor = myDB.getCars();
         if(cursor.getCount() == 0) {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                id.add(cursor.getString(0 ));
-                vin.add(cursor.getString(1 ));
-                make.add(cursor.getString(2 ));
-                model.add(cursor.getString(3 ));
-                year.add(cursor.getString(4 ));
-                mileage.add(cursor.getString(5 ));
-                image.add(cursor.getString(6 ));
+                carList.add(new Car(
+                        cursor.getString(cursor.getColumnIndex("vin")),
+                        cursor.getString(cursor.getColumnIndex("make")),
+                        cursor.getString(cursor.getColumnIndex("model")),
+                        cursor.getString(cursor.getColumnIndex("year")),
+                        cursor.getInt(cursor.getColumnIndex("mileage")),
+                        0, // TODO: After adding avg_miles to DB, switch this line to: cursor.getInt(cursor.getColumnIndex("avg_miles")),
+                        cursor.getString(cursor.getColumnIndex("image")),
+                        null // TODO: cursor.getString(cursor.getColumnIndex("name"))
+                ));
             }
         }
+        customAdapter = new CustomAdapter(DashboardActivity.this, carList, this);
+        recyclerView.setAdapter(customAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(DashboardActivity.this));
     }
 
     public void addCar (View view) {
@@ -66,8 +60,20 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void viewCar (View view) {
+    public void viewCar (Car c) {
         Intent intent = new Intent(this, ViewCarActivity.class);
+        intent.putExtra("car", c);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this, carList.get(position).getModel(), Toast.LENGTH_SHORT).show();
+        viewCar(carList.get(position));
+    }
+
+    @Override
+    public void onLongItemClick(int position) {
+        //TODO: Add edit (or delete?) on long press
     }
 }

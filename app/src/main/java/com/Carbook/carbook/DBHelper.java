@@ -43,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    Cursor readAllData() {
+    public Cursor getCars() {
         String query = "SELECT * FROM cars";
         SQLiteDatabase DB = this.getReadableDatabase();
 
