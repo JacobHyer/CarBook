@@ -2,11 +2,13 @@ package com.Carbook.carbook;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Car {
+public class Car implements Serializable {
     @SerializedName("Make")
     private String make;
     @SerializedName("Model")
@@ -120,5 +122,14 @@ public class Car {
 
     public void deleteMaintenanceItem(MaintenanceItem maintenanceItem) {
         maintenanceItemList.remove(maintenanceItem);
+    }
+
+    public String getFormattedDesc() {
+        return year + " " + make + " " + model;
+    }
+
+    public String getFormattedMileage() {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(mileage) + " mi.";
     }
 }

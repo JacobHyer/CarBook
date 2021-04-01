@@ -4,28 +4,28 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList id, vin, make, model, year, mileage, image;
+    private List<Car> carList;
+//    private ArrayList id, vin, make, model, year, mileage, image;
+    private RecyclerViewClickInterface recyclerViewClickInterface;
 
-    CustomAdapter(Context context,
-                  ArrayList id,
-                  ArrayList make,
-                  ArrayList model,
-                  ArrayList mileage) {
+    public CustomAdapter(Context context, List<Car> carList, RecyclerViewClickInterface recyclerViewClickInterface) {
         this.context = context;
-        this.id = id;
-        this.make = make;
-        this.model = model;
-        this.mileage = mileage;
+        this.carList = carList;
+        this.recyclerViewClickInterface = recyclerViewClickInterface;
     }
 
     @NonNull
@@ -38,27 +38,48 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.id_txt.setText(String.valueOf(id.get(position)));
-        holder.make_txt.setText(String.valueOf(make.get(position)));
-        holder.model_txt.setText(String.valueOf(model.get(position)));
-        holder.mileage_txt.setText(String.valueOf(mileage.get(position)));
+        Car c = carList.get(position);
+
+        String image = c.getImage();
+        String name = c.getName();
+
+        holder.name_txt.setText(name);
+        holder.desc_txt.setText(c.getFormattedDesc());
+        holder.mileage_txt.setText(c.getFormattedMileage());
+
+        Picasso.get()
+                .load(image)
+                .resize(250, 250)
+                .centerCrop()
+                .into(holder.Image_iv);
+
     }
 
     @Override
     public int getItemCount() {
-        return id.size();
+        return carList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        TextView id_txt, make_txt, model_txt, mileage_txt;
+        CardView cv;
+        TextView name_txt, desc_txt, mileage_txt;
+        ImageView Image_iv;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            id_txt = itemView.findViewById(R.id.id_txt);
-            make_txt = itemView.findViewById(R.id.make_txt);
-            model_txt = itemView.findViewById(R.id.model_txt);
-            mileage_txt = itemView.findViewById(R.id.mileage_txt);
+
+            cv = itemView.findViewById(R.id.cvCar);
+            name_txt = itemView.findViewById(R.id.tvName);
+            desc_txt = itemView.findViewById(R.id.tvCarDesc);
+            mileage_txt = itemView.findViewById(R.id.tvCarMileage);
+            Image_iv = itemView.findViewById(R.id.ivCarImage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerViewClickInterface.onItemClick(getAdapterPosition());
+                }
+            });
         }
     }
 }

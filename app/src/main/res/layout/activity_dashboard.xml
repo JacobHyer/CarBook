@@ -6,73 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#f5f5f5"
     tools:context=".DashboardActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/carImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constrainedHeight="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/carDesc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:singleLine="false"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/carImage"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="2014 Toyota Camry" />
-
-            <TextView
-                android:id="@+id/carMileage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/dark_gray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/carImage"
-                app:layout_constraintTop_toBottomOf="@+id/carDesc"
-                tools:text="80,000 mi." />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="373dp"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="23dp"
-            tools:layout_editor_absoluteY="158dp" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -82,32 +29,8 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:onClick="addCar"
-        android:src="@android:drawable/ic_menu_add"
+        android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/testAddMaint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="336dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:onClick="addMaint"
-        android:src="@android:drawable/ic_menu_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:onClick="viewCar"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_dialog_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

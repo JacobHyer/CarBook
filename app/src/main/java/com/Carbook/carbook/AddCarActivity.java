@@ -1,7 +1,5 @@
 package com.Carbook.carbook;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
@@ -48,8 +48,8 @@ public class AddCarActivity extends AppCompatActivity {
         userNickname = (EditText) findViewById(R.id.user_nickname);
         carName = findViewById(R.id.carNickname);
         carDescription = findViewById(R.id.carDescription);
-        carMileage = findViewById(R.id.carMileage);
-        carImage = findViewById(R.id.carImage);
+        carMileage = findViewById(R.id.tvCarMileage);
+        carImage = findViewById(R.id.ivCarImage);
         modelValues = new ArrayList<>();
         activity = this;
         newCar = new Car(null,null,null,null,-1, -1, null, null);
@@ -139,7 +139,7 @@ public class AddCarActivity extends AppCompatActivity {
             newCar.setMileage(intent.getIntExtra("MILEAGE", -1));
             newCar.setAvgMiles(intent.getIntExtra("AVG_MILEAGE", -1));
             if (newCar.getMileage() != -1) {
-                carMileage.setText(newCar.getMileage() + " miles");
+                carMileage.setText(newCar.getFormattedMileage());
             }
         }
     }
@@ -153,7 +153,7 @@ public class AddCarActivity extends AppCompatActivity {
         newCar.setModel(model);
         newCar.setYear(year);
 
-        carDescription.setText(newCar.getYear() + " " + newCar.getMake() + " " + newCar.getModel());
+        carDescription.setText(newCar.getFormattedDesc());
         getImg();
     }
     public void getImg() {
@@ -161,9 +161,9 @@ public class AddCarActivity extends AppCompatActivity {
         Thread thread2 = new Thread(imgTask, "imgAPI");
         thread2.start();
     }
+
     public void showImg(String url) {
-        System.out.println(url);
-        ImageView carImg = (ImageView) findViewById(R.id.carImage);
+        ImageView carImg = (ImageView) findViewById(R.id.ivCarImage);
         if (url.equals("NotFound")) {
             Picasso.get().load(R.drawable.img_not_found).fit().into(carImg);
         } else {
@@ -171,6 +171,7 @@ public class AddCarActivity extends AppCompatActivity {
             newCar.setImage(url);
         }
     }
+
     public void saveCar(View view) {
         Boolean checkInsertData = DB.insertCar(newCar);
         if (checkInsertData != true)
@@ -180,6 +181,7 @@ public class AddCarActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
     public void cancelAddCar(View view) {
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
