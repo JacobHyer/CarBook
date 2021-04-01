@@ -3,6 +3,7 @@ package com.Carbook.carbook;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Car {
@@ -14,6 +15,7 @@ public class Car {
     private String year;
     private String vin;
     private int mileage;
+    private Calendar dateChanged;
     private int avg_miles;
     private String image;
     private String name;
@@ -25,6 +27,7 @@ public class Car {
         this.model = model;
         this.year = year;
         this.mileage = mileage;
+        this.dateChanged = null;
         this.avg_miles = avg_miles;
         this.image = image;
         this.name = name;
@@ -73,6 +76,14 @@ public class Car {
 
     public void setMileage(int mileage) {
         this.mileage = mileage;
+    }
+
+    public Calendar getMileageChanged() {
+        return dateChanged;
+    }
+
+    public void setMileageChanged(Calendar date) {
+        this.dateChanged = date;
     }
 
     public int getAvgMiles() {
