@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
-        DB.execSQL("CREATE TABLE cars(id INTEGER PRIMARY KEY AUTOINCREMENT, vin TEXT UNIQUE, make TEXT, model TEXT, year TEXT, mileage INT(9), image TEXT)");
+        DB.execSQL("CREATE TABLE cars(id INTEGER PRIMARY KEY AUTOINCREMENT, vin TEXT UNIQUE, name TEXT NOT NULL, make TEXT, model TEXT, year TEXT, mileage INT(9), avg_miles INT(9), image TEXT)");
     }
 
     @Override
@@ -28,10 +28,12 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues car_data = new ContentValues();
 
         car_data.put("vin", car.getVin());
+        car_data.put("name", car.getName());
         car_data.put("make", car.getMake());
         car_data.put("model", car.getModel());
         car_data.put("year", car.getYear());
         car_data.put("mileage", car.getMileage());
+        car_data.put("avg_miles", car.getAvgMiles());
         car_data.put("image", car.getImage());
 
         long result=DB.insert("cars", null, car_data);

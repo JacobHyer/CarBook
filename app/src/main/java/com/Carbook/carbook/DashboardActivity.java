@@ -44,9 +44,9 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
                         cursor.getString(cursor.getColumnIndex("model")),
                         cursor.getString(cursor.getColumnIndex("year")),
                         cursor.getInt(cursor.getColumnIndex("mileage")),
-                        0, // TODO: After adding avg_miles to DB, switch this line to: cursor.getInt(cursor.getColumnIndex("avg_miles")),
+                        cursor.getInt(cursor.getColumnIndex("avg_miles")),
                         cursor.getString(cursor.getColumnIndex("image")),
-                        null // TODO: cursor.getString(cursor.getColumnIndex("name"))
+                        cursor.getString(cursor.getColumnIndex("name"))
                 ));
             }
         }

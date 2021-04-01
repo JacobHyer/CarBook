@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#f5f5f5"
     tools:context=".DashboardActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -28,7 +29,7 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:onClick="addCar"
-        android:src="@android:drawable/ic_menu_add"
+        android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
