@@ -33,6 +33,8 @@ public class ViewCarActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rvMaintenanceList);
 
         TextView field;
+        field = findViewById(R.id.tvNickname);
+        field.setText(car.getNickname());
         field = findViewById(R.id.tvCarDesc);
         field.setText(car.getFormattedDesc());
         field = findViewById(R.id.tvCarMileage);

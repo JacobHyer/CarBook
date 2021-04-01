@@ -40,7 +40,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         Car c = carList.get(position);
 
         String imageUrl = c.getImage();
-        String name = c.getName();
+        String name = c.getNickname();
 
         holder.name_txt.setText(name);
         holder.desc_txt.setText(c.getFormattedDesc());

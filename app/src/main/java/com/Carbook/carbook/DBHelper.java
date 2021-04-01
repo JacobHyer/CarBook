@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, "Carbook.db", null, 1);
@@ -28,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues car_data = new ContentValues();
 
         car_data.put("vin", car.getVin());
-        car_data.put("name", car.getName());
+        car_data.put("name", car.getNickname());
         car_data.put("make", car.getMake());
         car_data.put("model", car.getModel());
         car_data.put("year", car.getYear());

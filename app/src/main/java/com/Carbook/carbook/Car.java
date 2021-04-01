@@ -20,10 +20,10 @@ public class Car implements Serializable {
     private Calendar dateChanged;
     private int avg_miles;
     private String image;
-    private String name;
+    private String nickname;
     private List<MaintenanceItem> maintenanceItemList;
 
-    public Car(String vin, String make, String model, String year, int mileage, int avg_miles, String image, String name) {
+    public Car(String vin, String make, String model, String year, int mileage, int avg_miles, String image, String nickname) {
         this.vin = vin;
         this.make = make;
         this.model = model;
@@ -32,7 +32,7 @@ public class Car implements Serializable {
         this.dateChanged = null;
         this.avg_miles = avg_miles;
         this.image = image;
-        this.name = name;
+        this.nickname = nickname;
         this.maintenanceItemList = new ArrayList<MaintenanceItem>();
     }
 
@@ -96,12 +96,12 @@ public class Car implements Serializable {
         this.avg_miles = avg_miles;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public void delete() {

@@ -144,15 +144,14 @@ public class AddCarActivity extends AppCompatActivity {
         }
     }
     public void showName(String name) {
-        newCar.setName(name);
-        carName.setText(newCar.getName());
+        newCar.setNickname(name);
+        carName.setText(newCar.getNickname());
     }
     public void showCar(String make, String model, String year) {
         make = WordUtils.capitalizeFully(make);
         newCar.setMake(make);
         newCar.setModel(model);
         newCar.setYear(year);
-
         carDescription.setText(newCar.getFormattedDesc());
         getImg();
     }
