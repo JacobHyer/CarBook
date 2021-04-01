@@ -12,12 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarBook">
-        <activity android:name=".MileageActivity"></activity>
+        <activity android:name=".UpdateMaintenanceActivity"></activity>
+        <activity android:name=".MileageActivity" />
         <activity android:name=".AddCarActivity" />
         <activity
             android:name=".ViewCarActivity"
             android:label="@string/title_activity_view_car"
-            android:theme="@style/Theme.CarBook.NoActionBar"></activity>
+            android:theme="@style/Theme.CarBook.NoActionBar" />
         <activity android:name=".DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -72,4 +72,10 @@ public class DashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ViewCarActivity.class);
         startActivity(intent);
     }
+
+    //test for MUpdateMaintenanceActivity
+    public void addMaint(View view) {
+        Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
+        startActivity(intent);
+    }
 }
