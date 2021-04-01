@@ -15,10 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements RecyclerViewClickInterface {
-    public static final String EXTRA_MAKE = "com.Carbook.carbook.MAKE";
-    public static final String EXTRA_MODEL = "com.Carbook.carbook.MODEL";
-    public static final String EXTRA_YEAR = "com.Carbook.carbook.YEAR";
-    public static final String EXTRA_MILEAGE = "com.Carbook.carbook.MILEAGE";
     private List<Car> carList;
     RecyclerView recyclerView;
     DBHelper myDB;
@@ -68,7 +64,6 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, carList.get(position).getModel(), Toast.LENGTH_SHORT).show();
         viewCar(carList.get(position));
     }
 

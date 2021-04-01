@@ -46,8 +46,8 @@ public class AddCarActivity extends AppCompatActivity {
         userVIN = (EditText) findViewById(R.id.VIN_input);
         userYear = (EditText) findViewById(R.id.user_year);
         userNickname = (EditText) findViewById(R.id.user_nickname);
-        carName = findViewById(R.id.carNickname);
-        carDescription = findViewById(R.id.carDescription);
+        carName = findViewById(R.id.tvNickname);
+        carDescription = findViewById(R.id.tvCarDesc);
         carMileage = findViewById(R.id.tvCarMileage);
         carImage = findViewById(R.id.ivCarImage);
         modelValues = new ArrayList<>();

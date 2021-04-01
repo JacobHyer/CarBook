@@ -19,7 +19,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     private Context context;
     private List<Car> carList;
-//    private ArrayList id, vin, make, model, year, mileage, image;
     private RecyclerViewClickInterface recyclerViewClickInterface;
 
     public CustomAdapter(Context context, List<Car> carList, RecyclerViewClickInterface recyclerViewClickInterface) {
@@ -40,18 +39,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Car c = carList.get(position);
 
-        String image = c.getImage();
+        String imageUrl = c.getImage();
         String name = c.getName();
 
         holder.name_txt.setText(name);
         holder.desc_txt.setText(c.getFormattedDesc());
         holder.mileage_txt.setText(c.getFormattedMileage());
 
-        Picasso.get()
-                .load(image)
-                .resize(250, 250)
-                .centerCrop()
-                .into(holder.Image_iv);
+        if(imageUrl != null) {
+            Picasso.get().load(imageUrl).resize(250, 250).centerCrop().into(holder.Image_iv);
+        } else {
+            Picasso.get().load(R.drawable.car_icon).resize(250, 250).centerCrop().into(holder.Image_iv);
+        }
 
     }
 
@@ -69,7 +68,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             super(itemView);
 
             cv = itemView.findViewById(R.id.cvCar);
-            name_txt = itemView.findViewById(R.id.tvName);
+            name_txt = itemView.findViewById(R.id.tvNickname);
             desc_txt = itemView.findViewById(R.id.tvCarDesc);
             mileage_txt = itemView.findViewById(R.id.tvCarMileage);
             Image_iv = itemView.findViewById(R.id.ivCarImage);
