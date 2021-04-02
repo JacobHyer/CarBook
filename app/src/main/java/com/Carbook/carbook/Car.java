@@ -114,10 +114,6 @@ public class Car implements Serializable {
         this.id = id;
     }
 
-    public void delete() {
-
-    }
-
     public void addMaintenanceItem(String description, String notes, int mileage, String date_maintenance, int car_id) {
         maintenanceItemList.add(new MaintenanceItem(description, notes, mileage, date_maintenance, car_id));
     }
@@ -136,9 +132,9 @@ public class Car implements Serializable {
 
     public void showImg(ImageView iv) {
         if (this.image != null) {
-            Picasso.get().load(this.image).resize(250,250).centerCrop().error(R.drawable.car_icon).into(iv);
+            Picasso.get().load(this.image).fit().centerInside().error(R.drawable.car_icon).into(iv);
         } else {
-            Picasso.get().load(R.drawable.car_icon).resize(250,250).centerCrop().into(iv);
+            Picasso.get().load(R.drawable.car_icon).fit().centerInside().into(iv);
         }
     }
 
@@ -147,6 +143,7 @@ public class Car implements Serializable {
     }
 
     public String getFormattedMileage() {
+        if (mileage == -1) return "";
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(mileage) + " mi.";
     }

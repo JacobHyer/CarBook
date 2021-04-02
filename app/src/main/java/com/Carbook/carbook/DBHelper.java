@@ -9,6 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.text.SimpleDateFormat;
 
 public class DBHelper extends SQLiteOpenHelper {
+    public final String CARS_TABLE = "cars";
+    public final String MAINTENANCE_ITEM_TABLE = "maintenance";
+
     public DBHelper(Context context) {
         super(context, "Carbook.db", null, 1);
     }
@@ -64,11 +67,11 @@ public class DBHelper extends SQLiteOpenHelper {
         car_data.put("model", car.getModel());
         car_data.put("year", car.getYear());
         car_data.put("mileage", car.getMileage());
-        //car_data.put("mileage_date_changed", car.getMileageChanged());
+        car_data.put("mileage_date_changed", "");  //TODO: Insert today's date when adding a new car
         car_data.put("avg_miles", car.getAvgMiles());
         car_data.put("image", car.getImage());
 
-        long id = DB.insert("cars", null, car_data);
+        long id = DB.insert(CARS_TABLE, null, car_data);
 
         if(id == -1) {
             return false;
@@ -76,6 +79,17 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
 
+    }
+
+    public boolean deleteCar(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete(CARS_TABLE, "id=" + id, null);
+
+        if(result == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean updateField(String table, long id, String column, String value) {
@@ -101,7 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
         maintenance_data.put("date_m", maintenanceItem.getDateMaintenance());
         maintenance_data.put("car_id", car.getId());
 
-        long result=DB.insert("maintenance", null, maintenance_data);
+        long result=DB.insert(MAINTENANCE_ITEM_TABLE, null, maintenance_data);
 
         if(result == -1) {
             return false;
