@@ -15,9 +15,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import org.apache.commons.text.WordUtils;
 
 import java.util.ArrayList;
@@ -129,7 +126,7 @@ public class AddCarActivity extends AppCompatActivity {
         });
     }
 
-    public void enterMileage(View view) {
+    public void updateMileage(View view) {
         Intent intent = new Intent(this, MileageActivity.class);
         intent.putExtra("CAR", newCar);
         startActivityForResult(intent, 1);
@@ -172,12 +169,6 @@ public class AddCarActivity extends AppCompatActivity {
         ImageView carImg = (ImageView) findViewById(R.id.ivCarImage);
         newCar.setImage(url);
         newCar.showImg(carImg);
-        /*if (url.equals("NotFound")) {
-            Picasso.get().load(R.drawable.car_icon).fit().into(carImg);
-        } else {
-            Picasso.get().load(url).fit().into(carImg);
-            newCar.setImage(url);
-        }*/
     }
 
     public void saveCar(View view) {
