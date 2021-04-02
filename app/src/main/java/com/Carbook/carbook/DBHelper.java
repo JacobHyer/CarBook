@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
     public final String CARS_TABLE = "cars";
@@ -55,11 +57,16 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.execSQL("DROP TABLE IF EXISTS maintenance");
     }
 
+    public String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
     public boolean insertCar(Car car) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues car_data = new ContentValues();
-
-        java.util.Date writeTime = new java.util.Date();
 
         car_data.put("vin", car.getVin());
         car_data.put("name", car.getNickname());
@@ -67,7 +74,7 @@ public class DBHelper extends SQLiteOpenHelper {
         car_data.put("model", car.getModel());
         car_data.put("year", car.getYear());
         car_data.put("mileage", car.getMileage());
-        car_data.put("mileage_date_changed", "");  //TODO: Insert today's date when adding a new car
+        car_data.put("mileage_date_changed", getDateTime());
         car_data.put("avg_miles", car.getAvgMiles());
         car_data.put("image", car.getImage());
 
