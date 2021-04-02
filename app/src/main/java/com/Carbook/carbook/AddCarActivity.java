@@ -45,8 +45,8 @@ public class AddCarActivity extends AppCompatActivity {
         userVIN = (EditText) findViewById(R.id.VIN_input);
         userYear = (EditText) findViewById(R.id.user_year);
         userNickname = (EditText) findViewById(R.id.user_nickname);
-        carName = findViewById(R.id.tvNickname);
-        carDescription = findViewById(R.id.tvCarDesc);
+        carName = findViewById(R.id.tvTitle);
+        carDescription = findViewById(R.id.tvSubtitle);
         carMileage = findViewById(R.id.tvCarMileage);
         carImage = findViewById(R.id.ivCarImage);
         modelValues = new ArrayList<>();
@@ -105,6 +105,7 @@ public class AddCarActivity extends AppCompatActivity {
         Thread thread1 = new Thread(vinTask, "vinAPI");
         thread1.start();
     }
+
     public void populateModels(List<String> arr) {
         modelValues = arr;
         modelSpinner = (Spinner) findViewById(R.id.model_spinner);

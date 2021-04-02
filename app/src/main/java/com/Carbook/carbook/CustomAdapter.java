@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
-
     private Context context;
     private List<Car> carList;
     private RecyclerViewClickInterface recyclerViewClickInterface;
@@ -35,11 +34,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Car c = carList.get(position);
-        holder.name_txt.setText(c.getNickname());
-        holder.desc_txt.setText(c.getFormattedDesc());
-        holder.mileage_txt.setText(c.getFormattedMileage());
-        c.showImg(holder.Image_iv);
+        CarbookUtil.buildCardView(holder, carList.get(position));
     }
 
     @Override
@@ -49,17 +44,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView name_txt, desc_txt, mileage_txt;
-        ImageView Image_iv;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             cv = itemView.findViewById(R.id.cvCar);
-            name_txt = itemView.findViewById(R.id.tvNickname);
-            desc_txt = itemView.findViewById(R.id.tvCarDesc);
-            mileage_txt = itemView.findViewById(R.id.tvCarMileage);
-            Image_iv = itemView.findViewById(R.id.ivCarImage);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

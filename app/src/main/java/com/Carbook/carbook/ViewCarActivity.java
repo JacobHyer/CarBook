@@ -34,18 +34,9 @@ public class ViewCarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_car);
 
-        TextView field;
-        field = findViewById(R.id.tvNickname);
-        field.setText(car.getNickname());
-        field = findViewById(R.id.tvCarDesc);
-        field.setText(car.getFormattedDesc());
-        field = findViewById(R.id.tvCarMileage);
-        field.setText(car.getFormattedMileage());
-        car.showImg(findViewById(R.id.ivCarImage));
+        CarbookUtil.buildCardView(this, car);
 
-        //TODO: Set image
-
-        btnUpdateMileage = findViewById(R.id.btnUpdateMileage);
+        btnUpdateMileage = findViewById(R.id.btnUpdateMileage); //todo: need this?
 
         recyclerView = findViewById(R.id.rvMaintenanceList);
 
@@ -82,8 +73,6 @@ public class ViewCarActivity extends AppCompatActivity {
             Boolean success = db.updateField("cars", car.getId(), "mileage", String.valueOf(car.getMileage()));
             if(success) success = db.updateField("cars", car.getId(), "avg_miles", String.valueOf(car.getAvgMiles()));
             if (success) {
-//                intent = new Intent(this, DashboardActivity.class);
-//                startActivity(intent);
                 Toast.makeText(this, "Mileage updated", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show();

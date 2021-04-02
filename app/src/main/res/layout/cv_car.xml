@@ -32,7 +32,7 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/tvNickname"
+                android:id="@+id/tvTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -49,7 +49,7 @@
                 tools:text="The Batmobile" />
 
             <TextView
-                android:id="@+id/tvCarDesc"
+                android:id="@+id/tvSubtitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -61,7 +61,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivCarImage"
-                app:layout_constraintTop_toBottomOf="@+id/tvNickname"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
                 tools:text="2014 Toyota Camry" />
 
             <TextView
@@ -73,7 +73,7 @@
                 android:textColor="#454545"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivCarImage"
-                app:layout_constraintTop_toBottomOf="@+id/tvCarDesc"
+                app:layout_constraintTop_toBottomOf="@+id/tvSubtitle"
                 tools:text="80,000 mi." />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

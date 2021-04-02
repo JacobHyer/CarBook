@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //SQL statement of the cars table creation
         DB.execSQL("CREATE TABLE cars(id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " vin TEXT UNIQUE," +
-                " name TEXT NOT NULL," +
+                " name TEXT," +
                 " make TEXT NOT NULL," +
                 " model TEXT NOT NULL," +
                 " year TEXT NOT NULL," +

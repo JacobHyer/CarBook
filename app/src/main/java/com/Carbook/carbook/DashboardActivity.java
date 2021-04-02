@@ -19,8 +19,9 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
     private List<Car> carList;
     RecyclerView recyclerView;
     DBHelper myDB;
-
     CustomAdapter customAdapter;
+
+    //TODO: If nickname is null/empty, put car description in name textView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
