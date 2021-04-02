@@ -84,9 +84,7 @@ public class Car implements Serializable {
         this.mileage = mileage;
     }
 
-    public Calendar getMileageChanged() {
-        return dateChanged;
-    }
+    public Calendar getMileageChanged() { return dateChanged; }
 
     public void setMileageChanged(Calendar date) {
         this.dateChanged = date;
@@ -120,8 +118,8 @@ public class Car implements Serializable {
 
     }
 
-    public void addMaintenanceItem(String description, String notes, int mileage) {
-        maintenanceItemList.add(new MaintenanceItem(description, notes, mileage));
+    public void addMaintenanceItem(String description, String notes, int mileage, String date_maintenance, int car_id) {
+        maintenanceItemList.add(new MaintenanceItem(description, notes, mileage, date_maintenance, car_id));
     }
 
     public List<MaintenanceItem> getMaintenanceItemList() {
