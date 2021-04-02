@@ -34,7 +34,21 @@ public class DBHelper extends SQLiteOpenHelper {
         car_data.put("avg_miles", car.getAvgMiles());
         car_data.put("image", car.getImage());
 
-        long result=DB.insert("cars", null, car_data);
+        long id = DB.insert("cars", null, car_data);
+
+        if(id == -1) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    public boolean updateField(String table, long id, String column, String value) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(column, value);
+        int result = db.update(table, cv, "id =" + id, null);
 
         if(result == -1) {
             return false;

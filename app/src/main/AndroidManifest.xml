@@ -16,10 +16,7 @@
         <activity android:name=".UpdateMaintenanceActivity" />
         <activity android:name=".MileageActivity" />
         <activity android:name=".AddCarActivity" />
-        <activity
-            android:name=".ViewCarActivity"
-            android:label="@string/title_activity_view_car"
-            android:theme="@style/Theme.CarBook.NoActionBar" />
+        <activity android:name=".ViewCarActivity" />
         <activity android:name=".DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
