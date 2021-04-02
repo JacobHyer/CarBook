@@ -92,6 +92,24 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
         startActivity(intent);
     }
 
+    public void deleteCar (int position) {
+        Car c = carList.get(position);
+
+        if(myDB.deleteCar(c.getId())) { // if DB delete succeeds, remove from view and show toast
+            carList.remove(c);
+            recyclerView.removeViewAt(position);
+            customAdapter.notifyItemRemoved(position);
+            customAdapter.notifyItemRangeChanged(position, carList.size());
+
+            String name = c.getNickname();
+            if(name.isEmpty() || name == null) { name = c.getFormattedDesc(); }
+            Toast.makeText(this, name + " deleted", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onItemClick(int position) {
         viewCar(carList.get(position));
@@ -99,7 +117,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
 
     @Override
     public void onLongItemClick(int position) {
-
-        //TODO: Add edit (or delete?) on long press
+        //TODO: Set edit to long press. Make delete a button inside edit view.
+        deleteCar(position);
     }
 }

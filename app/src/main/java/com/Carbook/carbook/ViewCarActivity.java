@@ -41,6 +41,8 @@ public class ViewCarActivity extends AppCompatActivity {
         field.setText(car.getFormattedDesc());
         field = findViewById(R.id.tvCarMileage);
         field.setText(car.getFormattedMileage());
+        car.showImg(findViewById(R.id.ivCarImage));
+
         //TODO: Set image
 
         btnUpdateMileage = findViewById(R.id.btnUpdateMileage);

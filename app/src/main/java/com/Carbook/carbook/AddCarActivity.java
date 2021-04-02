@@ -126,7 +126,7 @@ public class AddCarActivity extends AppCompatActivity {
         });
     }
 
-    public void updateMileage(View view) {
+    public void enterMileage(View view) {
         Intent intent = new Intent(this, MileageActivity.class);
         intent.putExtra("CAR", newCar);
         startActivityForResult(intent, 1);
@@ -166,7 +166,7 @@ public class AddCarActivity extends AppCompatActivity {
     }
 
     public void showImg(String url) {
-        ImageView carImg = (ImageView) findViewById(R.id.ivCarImage);
+        ImageView carImg = findViewById(R.id.ivCarImage);
         newCar.setImage(url);
         newCar.showImg(carImg);
     }

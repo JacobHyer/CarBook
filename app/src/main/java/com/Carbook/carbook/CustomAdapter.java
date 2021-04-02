@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
@@ -41,14 +39,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.name_txt.setText(c.getNickname());
         holder.desc_txt.setText(c.getFormattedDesc());
         holder.mileage_txt.setText(c.getFormattedMileage());
-
-        String imageUrl = c.getImage();
-        if(imageUrl != null) {
-            Picasso.get().load(imageUrl).resize(250, 250).centerCrop().into(holder.Image_iv);
-        } else {
-            Picasso.get().load(R.drawable.car_icon).resize(250, 250).centerCrop().into(holder.Image_iv);
-        }
-
+        c.showImg(holder.Image_iv);
     }
 
     @Override
@@ -74,6 +65,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 @Override
                 public void onClick(View v) {
                     recyclerViewClickInterface.onItemClick(getAdapterPosition());
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    recyclerViewClickInterface.onLongItemClick(getAdapterPosition());
+                    return true;
                 }
             });
         }
