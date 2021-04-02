@@ -24,8 +24,8 @@ public class ViewCarActivity extends AppCompatActivity {
         //TODO: Delete this section when db table is set up
         // Car object for testing
         car = (Car)getIntent().getSerializableExtra("car");
-        car.addMaintenanceItem("Oil change", "Oil change at Jiffy Lube. Recommend transmission service.", 20000);
-        car.addMaintenanceItem("Tire rotation", null, 22500);
+        car.addMaintenanceItem("Oil change", "Oil change at Jiffy Lube. Recommend transmission service.", 20000, "2021/03/28", 1);
+        car.addMaintenanceItem("Tire rotation", null, 22500, "2021/03/15", 1);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_car);
