@@ -138,7 +138,7 @@ public class Car implements Serializable {
 
     public void showImg(ImageView iv) {
         if (this.image != null) {
-            Picasso.get().load(this.image).resize(250,250).centerCrop().into(iv);
+            Picasso.get().load(this.image).resize(250,250).centerCrop().error(R.drawable.car_icon).into(iv);
         } else {
             Picasso.get().load(R.drawable.car_icon).resize(250,250).centerCrop().into(iv);
         }
