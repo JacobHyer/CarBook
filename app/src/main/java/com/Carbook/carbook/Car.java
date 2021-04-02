@@ -143,6 +143,7 @@ public class Car implements Serializable {
             Picasso.get().load(R.drawable.car_icon).resize(250,250).centerCrop().into(iv);
         }
     }
+
     public String getFormattedDesc() {
         return year + " " + make + " " + model;
     }
