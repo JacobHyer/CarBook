@@ -14,8 +14,8 @@ import java.util.List;
 public class ViewCarActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    List<String> description, notes;
-    List<Integer> mileage;
+    List<String> description, notes, date_changed;
+    List<Integer> mileage, car_id;
     DBHelper myDB;
     Car car;
 
@@ -24,8 +24,8 @@ public class ViewCarActivity extends AppCompatActivity {
         // Car object for testing
         car = (Car)getIntent().getSerializableExtra("car");
 //        car = new Car(null, "Nissan", "Maxima", "2012", 70000, 100, null, "Herbie");
-        car.addMaintenanceItem("Oil change", "Oil change at Jiffy Lube. Recommend transmission service.", 20000);
-        car.addMaintenanceItem("Tire rotation", null, 22500);
+        car.addMaintenanceItem("Oil change", "Oil change at Jiffy Lube. Recommend transmission service.", 20000, "2021/03/28", 1);
+        car.addMaintenanceItem("Tire rotation", null, 22500, "2021/03/15", 2);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_car);
@@ -45,14 +45,18 @@ public class ViewCarActivity extends AppCompatActivity {
         description = new ArrayList<>();
         notes = new ArrayList<>();
         mileage = new ArrayList<>();
+        date_changed = new ArrayList<>();
+        car_id = new ArrayList<>();
 
         for (MaintenanceItem mi : car.getMaintenanceItemList()) {
             description.add(mi.getDescription());
             notes.add(mi.getNotes());
             mileage.add(mi.getMileage());
+            date_changed.add(mi.getDateMaintenance());
+            car_id.add(mi.getCarId());
         }
 
-        MaintenanceAdapter maintenanceAdapter = new MaintenanceAdapter(this, description, notes, mileage);
+        MaintenanceAdapter maintenanceAdapter = new MaintenanceAdapter(this, description, notes, mileage, date_changed, car_id);
         recyclerView.setAdapter(maintenanceAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

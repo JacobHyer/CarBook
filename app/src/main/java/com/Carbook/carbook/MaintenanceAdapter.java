@@ -14,12 +14,14 @@ import java.util.List;
 
 public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.MaintenanceViewHolder>{
     //TODO: Convert these ArrayLists to Maintenance objects instead (like we did in Dashboard / CustomAdapter with Cars)
-    private List desc, notes, mileage;
+    private List desc, notes, mileage, date_maintenance, car_id;
 
-    public MaintenanceAdapter(Context context, List<String> desc, List<String> notes, List<Integer> mileage) {
+    public MaintenanceAdapter(Context context, List<String> desc, List<String> notes, List<Integer> mileage, List<String>date_maintenance, List<Integer>car_id) {
         this.desc = desc;
         this.notes = notes;
         this.mileage = mileage;
+        this.date_maintenance = date_maintenance;
+        this.car_id = car_id;
     }
 
     @NonNull
