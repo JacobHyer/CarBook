@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements RecyclerViewClickInterface {
@@ -49,11 +50,37 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
                 carList.add(c);
             }
         }
+        if (carList.size() > 0) {
+            checkMileages(carList);
+        }
         customAdapter = new CustomAdapter(DashboardActivity.this, carList, this);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DashboardActivity.this));
     }
-
+    private void checkMileages (List<Car> list) {
+        Calendar today = Calendar.getInstance();
+        for (Car c : list) {
+            Calendar test = c.getMileageChanged();
+            if (test != null) {
+                test.add(Calendar.DATE, 30);
+                if (today.compareTo(test) > 0) {
+                    Intent intent = new Intent(this, MileageNotification.class);
+                    intent.putExtra("CAR", c);
+                    startActivity(intent);
+                }
+            }
+        }
+    }
+    //test() and testIntent() are both for demonstration purposes only as it would be difficult to
+    //demonstrate the notifications that are only sent 30 days after mileage is changed
+    public void test(View view) {
+        testIntent(carList.get(0));
+    }
+    public void testIntent(Car c) {
+        Intent intent = new Intent(this, MileageNotification.class);
+        intent.putExtra("CAR", c);
+        startActivity(intent);
+    }
     public void addCar (View view) {
         Intent intent = new Intent(this, AddCarActivity.class);
         startActivity(intent);
@@ -72,6 +99,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
 
     @Override
     public void onLongItemClick(int position) {
+
         //TODO: Add edit (or delete?) on long press
     }
 }

@@ -1,3 +1,4 @@
+
 package com.Carbook.carbook;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,15 +12,25 @@ import android.widget.EditText;
 
 public class MileageActivity extends AppCompatActivity {
 
+
     private EditText userMileage;
     private EditText userAvg;
+    private DBHelper db;
     private int miles;
     private int milesAvg;
+    private int code;
+    private long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mileage);
+
+        Intent intent = getIntent();
+        //Used to identify if the activity was started from a notification or from an activity
+        code = intent.getIntExtra("REQUESTCODE", -1);
+        id = intent.getLongExtra("ID", -1);
+        db = new DBHelper(this);
 
         userMileage = findViewById(R.id.user_mileage);
         userAvg = findViewById(R.id.user_avg);
@@ -60,11 +71,23 @@ public class MileageActivity extends AppCompatActivity {
     }
 
     public void saveMileage(View view) {
-        Intent intent = new Intent(this,AddCarActivity.class);
-        intent.putExtra("MILEAGE", miles);
-        intent.putExtra("AVG_MILEAGE", milesAvg);
-        setResult(1, intent);
-        finish();
+        //TODO: We may want to consolidate all code into this format to have this activity update the databases, then create the intent specific to which activity needs to be opened (based on request codes?)
+        //Request code 2 signifies that saving will need to return the user to the DashboardActivity
+        if (code == 2) {
+            Boolean success = db.updateField("cars", id, "mileage", String.valueOf(miles));
+            if(success) success = db.updateField("cars", id, "avg_miles", String.valueOf(milesAvg));
+            if (success) {
+                Intent intent = new Intent(this, MileageNotification.class);
+                setResult(2, intent);
+                finish();
+            }
+        } else {
+            Intent intent = new Intent(this,AddCarActivity.class);
+            intent.putExtra("MILEAGE", miles);
+            intent.putExtra("AVG_MILEAGE", milesAvg);
+            setResult(1, intent);
+            finish();
+        }
     }
 
     public void cancelMileage(View view) {
