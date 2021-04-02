@@ -13,15 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.MaintenanceViewHolder>{
-    //TODO: Convert these ArrayLists to Maintenance objects instead (like we did in Dashboard / CustomAdapter with Cars)
-    private List desc, notes, mileage, date_maintenance, car_id;
+    private List<MaintenanceItem> maintenanceItemList;
 
-    public MaintenanceAdapter(Context context, List<String> desc, List<String> notes, List<Integer> mileage, List<String>date_maintenance, List<Integer>car_id) {
-        this.desc = desc;
-        this.notes = notes;
-        this.mileage = mileage;
-        this.date_maintenance = date_maintenance;
-        this.car_id = car_id;
+    public MaintenanceAdapter(Context context, List<MaintenanceItem> maintenanceItemList) {
+        this.maintenanceItemList = maintenanceItemList;
     }
 
     @NonNull
@@ -34,14 +29,15 @@ public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MaintenanceViewHolder holder, int position) {
-        holder.desc_txt.setText(String.valueOf(desc.get(position)));
-        holder.notes_txt.setText(String.valueOf(notes.get(position)));
-        holder.mileage_txt.setText(String.valueOf(mileage.get(position)));
+        MaintenanceItem mi = maintenanceItemList.get(position);
+        holder.desc_txt.setText(mi.getDescription());
+        holder.notes_txt.setText(mi.getNotes());
+        holder.mileage_txt.setText(mi.getFormattedMileage());
     }
 
     @Override
     public int getItemCount() {
-        return desc.size();
+        return maintenanceItemList.size();
     }
 
     public class MaintenanceViewHolder extends RecyclerView.ViewHolder {

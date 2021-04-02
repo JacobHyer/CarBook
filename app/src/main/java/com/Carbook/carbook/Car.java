@@ -1,6 +1,9 @@
 package com.Carbook.carbook;
 
+import android.widget.ImageView;
+
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -22,6 +25,7 @@ public class Car implements Serializable {
     private String image;
     private String nickname;
     private List<MaintenanceItem> maintenanceItemList;
+    private long id;
 
     public Car(String vin, String make, String model, String year, int mileage, int avg_miles, String image, String nickname) {
         this.vin = vin;
@@ -102,6 +106,14 @@ public class Car implements Serializable {
         this.nickname = nickname;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void delete() {
 
     }
@@ -120,6 +132,14 @@ public class Car implements Serializable {
 
     public void deleteMaintenanceItem(MaintenanceItem maintenanceItem) {
         maintenanceItemList.remove(maintenanceItem);
+    }
+
+    public void showImg(ImageView iv) {
+        if (this.image != null) {
+            Picasso.get().load(this.image).resize(250,250).centerCrop().into(iv);
+        } else {
+            Picasso.get().load(R.drawable.car_icon).resize(250,250).centerCrop().into(iv);
+        }
     }
 
     public String getFormattedDesc() {
