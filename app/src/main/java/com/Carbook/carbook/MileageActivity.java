@@ -9,18 +9,22 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.Calendar;
+
 public class MileageActivity extends AppCompatActivity {
 
     private EditText userMileage;
     private EditText userAvg;
     private int miles;
     private int milesAvg;
+    Car car;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mileage);
 
+        car = (Car) getIntent().getSerializableExtra("CAR");
         userMileage = findViewById(R.id.user_mileage);
         userAvg = findViewById(R.id.user_avg);
 
@@ -60,6 +64,9 @@ public class MileageActivity extends AppCompatActivity {
     }
 
     public void saveMileage(View view) {
+        /*car.setMileage(miles);
+        car.setAvgMiles(milesAvg);
+        car.setMileageChanged(Calendar.getInstance());*/
         Intent intent = new Intent(this,AddCarActivity.class);
         intent.putExtra("MILEAGE", miles);
         intent.putExtra("AVG_MILEAGE", milesAvg);

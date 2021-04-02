@@ -16,10 +16,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.apache.commons.text.WordUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AddCarActivity extends AppCompatActivity {
@@ -128,6 +130,7 @@ public class AddCarActivity extends AppCompatActivity {
     }
     public void enterMileage(View view) {
         Intent intent = new Intent(this, MileageActivity.class);
+        intent.putExtra("CAR", newCar);
         startActivityForResult(intent, 1);
     }
     @Override
@@ -138,6 +141,7 @@ public class AddCarActivity extends AppCompatActivity {
         if (requestCode == 1) {
             newCar.setMileage(intent.getIntExtra("MILEAGE", -1));
             newCar.setAvgMiles(intent.getIntExtra("AVG_MILEAGE", -1));
+            newCar.setMileageChanged(Calendar.getInstance());
             if (newCar.getMileage() != -1) {
                 carMileage.setText(newCar.getFormattedMileage());
             }
@@ -163,12 +167,14 @@ public class AddCarActivity extends AppCompatActivity {
 
     public void showImg(String url) {
         ImageView carImg = (ImageView) findViewById(R.id.ivCarImage);
-        if (url.equals("NotFound")) {
-            Picasso.get().load(R.drawable.img_not_found).fit().into(carImg);
+        newCar.setImage(url);
+        newCar.showImg(carImg);
+        /*if (url.equals("NotFound")) {
+            Picasso.get().load(R.drawable.car_icon).fit().into(carImg);
         } else {
             Picasso.get().load(url).fit().into(carImg);
             newCar.setImage(url);
-        }
+        }*/
     }
 
     public void saveCar(View view) {
