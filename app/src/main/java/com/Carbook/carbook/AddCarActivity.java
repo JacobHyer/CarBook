@@ -36,6 +36,8 @@ public class AddCarActivity extends AppCompatActivity {
     private AddCarActivity activity;
     private Car newCar;
 
+    public static final String TAG = "AddCarActivity";
+
     DBHelper DB;
 
     @Override
