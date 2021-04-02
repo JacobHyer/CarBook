@@ -19,6 +19,10 @@ public class ViewCarActivity extends AppCompatActivity {
     private DBHelper db;
     private Car car;
     private Button btnUpdateMileage;
+    public static final String EXTRA_MILEAGE = "MILEAGE";
+    public static final String EXTRA_AVG_MILEAGE = "AVG_MILEAGE";
+    public static final String TAG = "ViewCarActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +57,8 @@ public class ViewCarActivity extends AppCompatActivity {
         recyclerView.setAdapter(maintenanceAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         //TODO:
         // Pull maintenance items from database.
-        // Not sure what the below commented code is for. Git says I (Ryan) added it, but I don't remember doing that. Definitely possible I copy/pasted it from somewhere while trying to figure something out.
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-//        toolBarLayout.setTitle(getTitle());
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
     public void addMaintenanceItem(View view) {
         Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
@@ -80,6 +68,9 @@ public class ViewCarActivity extends AppCompatActivity {
 
     public void updateMileage(View view) {
         Intent intent = new Intent(this, MileageActivity.class);
+        intent.putExtra("uniqueId", TAG);
+        intent.putExtra(EXTRA_MILEAGE, car.getMileage());
+        intent.putExtra(EXTRA_AVG_MILEAGE, car.getAvgMiles());
         startActivityForResult(intent, 1);
     }
 
@@ -87,9 +78,9 @@ public class ViewCarActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         //Request code 1 is for updating mileage on car
-        if (requestCode == 1) {
-            car.setMileage(intent.getIntExtra("MILEAGE", -1));
-            car.setAvgMiles(intent.getIntExtra("AVG_MILEAGE", -1));
+        if (requestCode == 1 && resultCode == 1) {
+            car.setMileage(intent.getIntExtra(EXTRA_MILEAGE, -1));
+            car.setAvgMiles(intent.getIntExtra(EXTRA_AVG_MILEAGE, -1));
             if (car.getMileage() != -1) {
                 TextView mileage = findViewById(R.id.tvCarMileage);
                 mileage.setText(car.getFormattedMileage());

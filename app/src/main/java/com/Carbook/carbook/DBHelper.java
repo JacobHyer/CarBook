@@ -91,7 +91,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertMaintenance(MaintenanceItem maintenanceItem) {
+    public boolean insertMaintenance(Car car, MaintenanceItem maintenanceItem) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues maintenance_data = new ContentValues();
 
@@ -99,7 +99,7 @@ public class DBHelper extends SQLiteOpenHelper {
         maintenance_data.put("notes", maintenanceItem.getNotes());
         maintenance_data.put("mileage", maintenanceItem.getMileage());
         maintenance_data.put("date_m", maintenanceItem.getDateMaintenance());
-        maintenance_data.put("car_id", maintenanceItem.getCarId());
+        maintenance_data.put("car_id", car.getId());
 
         long result=DB.insert("maintenance", null, maintenance_data);
 
