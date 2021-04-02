@@ -50,7 +50,9 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
                 carList.add(c);
             }
         }
-        //checkMileages(carList);
+        if (carList.size() > 0) {
+            checkMileages(carList);
+        }
         customAdapter = new CustomAdapter(DashboardActivity.this, carList, this);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DashboardActivity.this));
@@ -59,16 +61,18 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
         Calendar today = Calendar.getInstance();
         for (Car c : list) {
             Calendar test = c.getMileageChanged();
-            test.add(Calendar.DATE, 30);
-            if (today.compareTo(test) > 0) {
-                Intent intent = new Intent(this, MileageNotification.class);
-                intent.putExtra("MILEAGE", c.getMileage());
-                intent.putExtra("AVG_MILES", c.getAvgMiles());
-                startActivityForResult(intent, 1);
+            if (test != null) {
+                test.add(Calendar.DATE, 30);
+                if (today.compareTo(test) > 0) {
+                    Intent intent = new Intent(this, MileageNotification.class);
+                    intent.putExtra("CAR", c);
+                    startActivity(intent);
+                }
             }
         }
     }
-
+    //test() and testIntent() are both for demonstration purposes only as it would be difficult to
+    //demonstrate the notifications that are only sent 30 days after mileage is changed
     public void test(View view) {
         testIntent(carList.get(0));
     }
