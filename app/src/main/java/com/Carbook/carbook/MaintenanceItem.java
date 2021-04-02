@@ -7,7 +7,6 @@ public class MaintenanceItem {
     private String notes;
     private String date_maintenance;
     private int mileage;
-    private int car_id;
 
 
     public MaintenanceItem(String description, String notes, int mileage, String date_maintenance, int car_id) {
@@ -15,7 +14,6 @@ public class MaintenanceItem {
         this.notes = notes;
         this.mileage = mileage;
         this.date_maintenance = date_maintenance;
-        this.car_id = car_id;
     }
 
     public String getDescription() {
@@ -45,10 +43,6 @@ public class MaintenanceItem {
     public String getDateMaintenance() { return date_maintenance; }
 
     public void setDateMaintenance(String date_maintenance) { this.date_maintenance = date_maintenance; }
-
-    public int getCarId() { return car_id; }
-
-    public void setCarId(int car_id) { this.car_id = car_id; }
 
     public String getFormattedMileage() {
         DecimalFormat formatter = new DecimalFormat("#,###");
