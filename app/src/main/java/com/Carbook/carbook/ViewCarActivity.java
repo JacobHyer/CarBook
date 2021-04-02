@@ -19,8 +19,7 @@ public class ViewCarActivity extends AppCompatActivity {
     private DBHelper db;
     private Car car;
     private Button btnUpdateMileage;
-    public static final String EXTRA_MILEAGE = "MILEAGE";
-    public static final String EXTRA_AVG_MILEAGE = "AVG_MILEAGE";
+
     public static final String TAG = "ViewCarActivity";
 
 
@@ -69,23 +68,25 @@ public class ViewCarActivity extends AppCompatActivity {
     public void updateMileage(View view) {
         Intent intent = new Intent(this, MileageActivity.class);
         intent.putExtra("uniqueId", TAG);
-        intent.putExtra(EXTRA_MILEAGE, car.getMileage());
-        intent.putExtra(EXTRA_AVG_MILEAGE, car.getAvgMiles());
+        intent.putExtra("carId", car.getId());
+        intent.putExtra(MileageActivity.EXTRA_MILEAGE, car.getMileage());
+        intent.putExtra(MileageActivity.EXTRA_AVG_MILEAGE, car.getAvgMiles());
         startActivityForResult(intent, 1);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-
+        System.out.println(requestCode);
+        System.out.println(resultCode);
         //Request code 1 is for updating mileage on car
         if (requestCode == 1 && resultCode == 1) {
-            car.setMileage(intent.getIntExtra(EXTRA_MILEAGE, -1));
-            car.setAvgMiles(intent.getIntExtra(EXTRA_AVG_MILEAGE, -1));
+            //car.setMileage(intent.getIntExtra(MileageActivity.EXTRA_MILEAGE, -1));
+            //car.setAvgMiles(intent.getIntExtra(MileageActivity.EXTRA_AVG_MILEAGE, -1));
             if (car.getMileage() != -1) {
                 TextView mileage = findViewById(R.id.tvCarMileage);
                 mileage.setText(car.getFormattedMileage());
             }
-            Boolean success = db.updateField("cars", car.getId(), "mileage", String.valueOf(car.getMileage()));
+            /*Boolean success = db.updateField("cars", car.getId(), "mileage", String.valueOf(car.getMileage()));
             if(success) success = db.updateField("cars", car.getId(), "avg_miles", String.valueOf(car.getAvgMiles()));
             if (success) {
 //                intent = new Intent(this, DashboardActivity.class);
@@ -93,7 +94,7 @@ public class ViewCarActivity extends AppCompatActivity {
                 Toast.makeText(this, "Mileage updated", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show();
-            }
+            }*/
         }
     }
 }
