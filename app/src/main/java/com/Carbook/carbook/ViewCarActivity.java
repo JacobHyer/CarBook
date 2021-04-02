@@ -70,7 +70,7 @@ public class ViewCarActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         //Request code 1 is for updating mileage on car
-        if (requestCode == 1) {
+        if (requestCode == 1 && resultCode == 1) {
             car.setMileage(intent.getIntExtra(EXTRA_MILEAGE, -1));
             car.setAvgMiles(intent.getIntExtra(EXTRA_AVG_MILEAGE, -1));
             if (car.getMileage() != -1) {
