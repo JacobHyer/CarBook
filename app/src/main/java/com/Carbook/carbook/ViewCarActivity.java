@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,9 @@ public class ViewCarActivity extends AppCompatActivity {
         field.setText(car.getFormattedDesc());
         field = findViewById(R.id.tvCarMileage);
         field.setText(car.getFormattedMileage());
-        //TODO: Set image
+        ImageView iv;
+        iv = findViewById(R.id.ivCarImage);
+        car.showImg(iv);
 
         btnUpdateMileage = findViewById(R.id.btnUpdateMileage);
 
@@ -68,6 +71,11 @@ public class ViewCarActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+    }
+    public void addMaintenanceItem(View view) {
+        Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
+        intent.putExtra("CAR", car);
+        startActivityForResult(intent, 2);
     }
 
     public void updateMileage(View view) {

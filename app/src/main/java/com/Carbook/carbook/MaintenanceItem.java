@@ -1,8 +1,9 @@
 package com.Carbook.carbook;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class MaintenanceItem {
+public class MaintenanceItem implements Serializable {
     private String description;
     private String notes;
     private String date_maintenance;
