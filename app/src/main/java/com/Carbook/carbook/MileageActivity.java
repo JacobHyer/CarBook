@@ -35,6 +35,16 @@ public class MileageActivity extends AppCompatActivity {
         userMileage = findViewById(R.id.user_mileage);
         userAvg = findViewById(R.id.user_avg);
 
+        // Set existing mileage values if called from ViewCarActivity
+        String calledBy = getIntent().getStringExtra("uniqueId");
+        if(calledBy != null && calledBy.equals(ViewCarActivity.TAG)) {
+            miles = getIntent().getIntExtra(ViewCarActivity.EXTRA_MILEAGE, 0);
+            milesAvg = getIntent().getIntExtra(ViewCarActivity.EXTRA_AVG_MILEAGE, 0);
+            userMileage.setText(String.valueOf(miles));
+            userAvg.setText(String.valueOf(milesAvg));
+
+        }
+
         userMileage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -48,7 +58,11 @@ public class MileageActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                miles = Integer.parseInt(s.toString());
+                try {
+                    miles = Integer.parseInt(s.toString());
+                } catch (Exception e) {
+                    // Exceptions being thrown on empty strings
+                }
             }
         });
 
@@ -65,7 +79,11 @@ public class MileageActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                milesAvg = Integer.parseInt(s.toString());
+                try {
+                    milesAvg = Integer.parseInt(s.toString());
+                } catch (Exception e) {
+                // Exceptions being thrown on empty strings
+                }
             }
         });
     }
