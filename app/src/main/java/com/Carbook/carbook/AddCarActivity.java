@@ -126,10 +126,12 @@ public class AddCarActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
+
     public void enterMileage(View view) {
         Intent intent = new Intent(this, MileageActivity.class);
         startActivityForResult(intent, 1);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -143,6 +145,7 @@ public class AddCarActivity extends AppCompatActivity {
             }
         }
     }
+
     public void showName(String name) {
         newCar.setNickname(name);
         carName.setText(newCar.getNickname());

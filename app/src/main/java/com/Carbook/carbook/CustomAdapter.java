@@ -38,14 +38,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Car c = carList.get(position);
-
-        String imageUrl = c.getImage();
-        String name = c.getNickname();
-
-        holder.name_txt.setText(name);
+        holder.name_txt.setText(c.getNickname());
         holder.desc_txt.setText(c.getFormattedDesc());
         holder.mileage_txt.setText(c.getFormattedMileage());
 
+        String imageUrl = c.getImage();
         if(imageUrl != null) {
             Picasso.get().load(imageUrl).resize(250, 250).centerCrop().into(holder.Image_iv);
         } else {

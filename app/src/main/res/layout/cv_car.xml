@@ -5,8 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
-    tools:context=".ViewCarActivity">
+    android:fitsSystemWindows="true">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCar"
@@ -25,12 +24,12 @@
                 android:id="@+id/ivCarImage"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
+                android:contentDescription="TODO"
                 app:layout_constrainedHeight="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars"
-                android:contentDescription="TODO" />
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/tvNickname"
@@ -47,7 +46,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivCarImage"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="The Batmobile"  />
+                tools:text="The Batmobile" />
 
             <TextView
                 android:id="@+id/tvCarDesc"

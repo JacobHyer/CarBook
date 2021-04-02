@@ -1,5 +1,7 @@
 package com.Carbook.carbook;
 
+import java.text.DecimalFormat;
+
 public class MaintenanceItem {
     private String description;
     private String notes;
@@ -33,5 +35,10 @@ public class MaintenanceItem {
 
     public void setMileage(int mileage) {
         this.mileage = mileage;
+    }
+
+    public String getFormattedMileage() {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(mileage) + " mi.";
     }
 }
