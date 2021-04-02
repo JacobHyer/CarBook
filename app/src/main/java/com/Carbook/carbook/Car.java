@@ -1,6 +1,9 @@
 package com.Carbook.carbook;
 
+import android.widget.ImageView;
+
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -124,6 +127,13 @@ public class Car implements Serializable {
         maintenanceItemList.remove(maintenanceItem);
     }
 
+    public void showImg(ImageView iv) {
+        if (this.image != null) {
+            Picasso.get().load(this.image).resize(250,250).centerCrop().into(iv);
+        } else {
+            Picasso.get().load(R.drawable.car_icon).resize(250,250).centerCrop().into(iv);
+        }
+    }
     public String getFormattedDesc() {
         return year + " " + make + " " + model;
     }
