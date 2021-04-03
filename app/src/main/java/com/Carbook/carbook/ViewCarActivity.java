@@ -51,7 +51,9 @@ public class ViewCarActivity extends AppCompatActivity {
 
         //clears maintenance list so only items from database will be read (avoid duplicates)
         //using Iterator to avoid ConcurrentModificationException
-        for( Iterator<MaintenanceItem> iterator = car.getMaintenanceItemList().iterator(); iterator.hasNext();) {
+        Iterator<MaintenanceItem> iterator = car.getMaintenanceItemList().iterator();
+        while(iterator.hasNext()) {
+            iterator.next();
             iterator.remove();
         }
         db = new DBHelper(this);
@@ -94,6 +96,7 @@ public class ViewCarActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        //TODO: fix mileage functionality
         super.onActivityResult(requestCode, resultCode, intent);
         System.out.println(requestCode);
         System.out.println(resultCode);
