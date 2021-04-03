@@ -1,6 +1,7 @@
 package com.Carbook.carbook;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
@@ -18,6 +20,8 @@ import java.util.List;
 public class DashboardActivity extends AppCompatActivity implements RecyclerViewClickInterface {
     private List<Car> carList;
     RecyclerView recyclerView;
+    CardView emptyView;
+
     DBHelper myDB;
 
     CustomAdapter customAdapter;
@@ -27,12 +31,15 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         recyclerView = findViewById(R.id.rvCar);
+        emptyView = findViewById(R.id.empty_view);
         carList = new ArrayList<Car>();
         myDB = new DBHelper(DashboardActivity.this);
 
         Cursor cursor = myDB.getCars();
         if(cursor.getCount() == 0) {
-            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
                 Car c = new Car(
@@ -53,9 +60,11 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
         if (carList.size() > 0) {
             checkMileages(carList);
         }
+
         customAdapter = new CustomAdapter(DashboardActivity.this, carList, this);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DashboardActivity.this));
+
     }
     private void checkMileages (List<Car> list) {
         Calendar today = Calendar.getInstance();
