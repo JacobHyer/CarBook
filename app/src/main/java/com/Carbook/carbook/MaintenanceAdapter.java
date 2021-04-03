@@ -13,10 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.MaintenanceViewHolder>{
-    private List<MaintenanceItem> maintenanceItemList;
 
-    public MaintenanceAdapter(Context context, List<MaintenanceItem> maintenanceItemList) {
+    private Context context;
+    private List<MaintenanceItem> maintenanceItemList;
+    private RecyclerViewClickInterface rvci;
+
+    public MaintenanceAdapter(Context context, List<MaintenanceItem> maintenanceItemList, RecyclerViewClickInterface rvci) {
+        this.context = context;
         this.maintenanceItemList = maintenanceItemList;
+        this.rvci = rvci;
     }
 
     @NonNull
@@ -50,6 +55,21 @@ public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.
             notes_txt = itemView.findViewById(R.id.tvMaintenanceItemNotes);
             mileage_txt = itemView.findViewById(R.id.tvMaintenanceItemMileage);
             date_text = itemView.findViewById(R.id.tvMaintenanceItemDate);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    rvci.onItemClick(getAdapterPosition());
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    rvci.onLongItemClick(getAdapterPosition());
+                    return true;
+                }
+            });
         }
 
     }

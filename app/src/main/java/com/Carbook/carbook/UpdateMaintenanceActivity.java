@@ -33,10 +33,10 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
         maintDesc = (EditText) findViewById(R.id.maint_descrip);
         maintMileage = (EditText) findViewById(R.id.maint_mileage);
         maintNote = (EditText) findViewById(R.id.maint_notes);
-        item = new MaintenanceItem(null, null,-1,null,-1);
         db = new DBHelper(this);
 
         car = (Car)getIntent().getSerializableExtra("CAR");
+        item = new MaintenanceItem(null, null,-1,null,(int)(car.getId()));
 
         dateText = (EditText) findViewById(R.id.editTextDate);
         dateText.setInputType(InputType.TYPE_NULL);
@@ -61,18 +61,20 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
     }
 
     public void saveItem(View view) {
-        car.addMaintenanceItem(
+
+        /*car.addMaintenanceItem(
                 maintDesc.getText().toString(),
                 maintNote.getText().toString(),
                 Integer.parseInt(maintMileage.getText().toString()),
                 dateText.getText().toString(),
                 (int)car.getId()
         );
-
+*/
         item.setDescription(maintDesc.getText().toString());
         item.setNotes(maintNote.getText().toString());
         item.setDateMaintenance(dateText.getText().toString());
         item.setMileage(Integer.parseInt(maintMileage.getText().toString()));
+        car.addMaintenanceItem(item);
 
         Boolean success = db.insertMaintenance(car, item);
         if (success) {

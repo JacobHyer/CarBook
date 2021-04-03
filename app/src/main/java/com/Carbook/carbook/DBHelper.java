@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -99,6 +100,16 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean clearMaintItems(List<MaintenanceItem> itemList) {
+        for (MaintenanceItem mi : itemList) {
+            if (deleteMaintenance(mi.getId())) {
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public Car createCarObject(Cursor cursor) {
         Car c = new Car(
                 cursor.getString(cursor.getColumnIndex("vin")),
@@ -112,7 +123,29 @@ public class DBHelper extends SQLiteOpenHelper {
         );
         //save db id to Car object for easier reference to db later
         c.setId(cursor.getLong(cursor.getColumnIndex("id")));
+        //Add all saved MIs to car object (for clean deletion in Dashboard Activity)
+        Cursor miCursor = getMaintItems((int)c.getId());
+        if (cursor.getCount() == 0) {
+        } else {
+            while (miCursor.moveToNext()) {
+                MaintenanceItem mi = createMaintObject(miCursor);
+                c.addMaintenanceItem(mi);
+            }
+        }
         return c;
+    }
+
+    public MaintenanceItem createMaintObject(Cursor cursor) {
+        MaintenanceItem mi = new MaintenanceItem(
+                cursor.getString(cursor.getColumnIndex("description")),
+                cursor.getString(cursor.getColumnIndex("notes")),
+                cursor.getInt(cursor.getColumnIndex("mileage")),
+                cursor.getString(cursor.getColumnIndex("date_m")),
+                cursor.getInt(cursor.getColumnIndex("car_id"))
+        );
+        //save db id to MaintenanceItem object for easier reference to db later
+        mi.setId(cursor.getInt(cursor.getColumnIndex("id_m")));
+        return mi;
     }
 
     public boolean updateField(String table, long id, String column, String value) {
@@ -141,6 +174,17 @@ public class DBHelper extends SQLiteOpenHelper {
         long result=DB.insert(MAINTENANCE_ITEM_TABLE, null, maintenance_data);
 
         if(result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean deleteMaintenance(int id_m) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int result = db.delete(MAINTENANCE_ITEM_TABLE, "id_m=" + id_m, null);
+
+        if (result == -1) {
             return false;
         } else {
             return true;

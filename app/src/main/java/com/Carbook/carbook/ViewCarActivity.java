@@ -16,13 +16,15 @@ import android.widget.Toast;
 
 import java.util.Iterator;
 
-public class ViewCarActivity extends AppCompatActivity {
+public class ViewCarActivity extends AppCompatActivity implements RecyclerViewClickInterface {
 
     private RecyclerView recyclerView;
     private DBHelper db;
     private Car car;
     private Button btnUpdateMileage;
     private TextView carMileage;
+
+    private MaintenanceAdapter maintenanceAdapter;
 
     public static final String TAG = "ViewCarActivity";
 
@@ -70,23 +72,14 @@ public class ViewCarActivity extends AppCompatActivity {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                //System.out.println(cursor.getString(cursor.getColumnIndex("description")));
-                car.addMaintenanceItem(
-                        cursor.getString(cursor.getColumnIndex("description")),
-                        cursor.getString(cursor.getColumnIndex("notes")),
-                        cursor.getInt(cursor.getColumnIndex("mileage")),
-                        cursor.getString(cursor.getColumnIndex("date_m")),
-                        cursor.getInt(cursor.getColumnIndex("car_id"))
-                );
+                MaintenanceItem mi = db.createMaintObject(cursor);
+                car.addMaintenanceItem(mi);
             }
         }
 
-        MaintenanceAdapter maintenanceAdapter = new MaintenanceAdapter(this, car.getMaintenanceItemList());
+        maintenanceAdapter = new MaintenanceAdapter(this, car.getMaintenanceItemList(), this);
         recyclerView.setAdapter(maintenanceAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //TODO:
-        // Pull maintenance items from database.
     }
     public void addMaintenanceItem(View view) {
         Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
@@ -104,25 +97,44 @@ public class ViewCarActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        //TODO: fix mileage functionality (mileage also needs to change on cv after update)
         super.onActivityResult(requestCode, resultCode, intent);
 
         //Request code 1 is for updating mileage on car
         if (requestCode == 1 && resultCode == 1) {
-            //car.setMileage(intent.getIntExtra(MileageActivity.EXTRA_MILEAGE, -1));
-            //car.setAvgMiles(intent.getIntExtra(MileageActivity.EXTRA_AVG_MILEAGE, -1));
+            //As cv will not refresh, new mileage is sent via intent and card is updated
+            car.setMileage(intent.getIntExtra(MileageActivity.EXTRA_MILEAGE, -1));
             if (car.getMileage() != -1) {
                 carMileage.setText(car.getFormattedMileage());
             }
-            /*Boolean success = db.updateField("cars", car.getId(), "mileage", String.valueOf(car.getMileage()));
-            if(success) success = db.updateField("cars", car.getId(), "avg_miles", String.valueOf(car.getAvgMiles()));
-            if (success) {
-//                intent = new Intent(this, DashboardActivity.class);
-//                startActivity(intent);
-                Toast.makeText(this, "Mileage updated", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show();
-            }*/
         }
+    }
+
+    public void viewItem(MaintenanceItem mi) {
+        //TODO: Change to populate the fields in UpdateMaintenanceActivity
+    }
+
+    public void deleteItem(int position) {
+        MaintenanceItem mi = car.getMaintenanceItemList().get(position);
+
+        if(db.deleteMaintenance(mi.getId())) { //position is -1 from rowId
+            car.deleteMaintenanceItem(mi);
+            recyclerView.removeViewAt(position);
+            maintenanceAdapter.notifyItemRemoved(position);
+            maintenanceAdapter.notifyItemRangeChanged(position, car.getMaintenanceItemList().size());
+
+            Toast.makeText(this, "Item deleted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        viewItem(car.getMaintenanceItemList().get(position));
+    }
+
+    @Override
+    public void onLongItemClick(int position) {
+        deleteItem(position);
     }
 }

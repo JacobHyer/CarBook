@@ -36,18 +36,6 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
         } else {
             while (cursor.moveToNext()) {
                 Car c = myDB.createCarObject(cursor);
-                /*Car c = new Car(
-                        cursor.getString(cursor.getColumnIndex("vin")),
-                        cursor.getString(cursor.getColumnIndex("make")),
-                        cursor.getString(cursor.getColumnIndex("model")),
-                        cursor.getString(cursor.getColumnIndex("year")),
-                        cursor.getInt(cursor.getColumnIndex("mileage")),
-                        cursor.getInt(cursor.getColumnIndex("avg_miles")),
-                        cursor.getString(cursor.getColumnIndex("image")),
-                        cursor.getString(cursor.getColumnIndex("name"))
-                        );
-                        //save db id to Car object for easier reference to db later
-                        c.setId(cursor.getLong(cursor.getColumnIndex("id")));*/
                 carList.add(c);
             }
         }
@@ -97,7 +85,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
     public void deleteCar (int position) {
         Car c = carList.get(position);
 
-        if(myDB.deleteCar(c.getId())) { // if DB delete succeeds, remove from view and show toast
+        if(myDB.clearMaintItems(c.getMaintenanceItemList()) && myDB.deleteCar(c.getId())) { // if DB delete succeeds, remove from view and show toast
             carList.remove(c);
             recyclerView.removeViewAt(position);
             customAdapter.notifyItemRemoved(position);
