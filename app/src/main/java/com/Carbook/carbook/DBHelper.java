@@ -99,6 +99,22 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Car createCarObject(Cursor cursor) {
+        Car c = new Car(
+                cursor.getString(cursor.getColumnIndex("vin")),
+                cursor.getString(cursor.getColumnIndex("make")),
+                cursor.getString(cursor.getColumnIndex("model")),
+                cursor.getString(cursor.getColumnIndex("year")),
+                cursor.getInt(cursor.getColumnIndex("mileage")),
+                cursor.getInt(cursor.getColumnIndex("avg_miles")),
+                cursor.getString(cursor.getColumnIndex("image")),
+                cursor.getString(cursor.getColumnIndex("name"))
+        );
+        //save db id to Car object for easier reference to db later
+        c.setId(cursor.getLong(cursor.getColumnIndex("id")));
+        return c;
+    }
+
     public boolean updateField(String table, long id, String column, String value) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -137,6 +153,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = null;
         if(DB != null) {
+            cursor = DB.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor getOneCar(long carId) {
+        String query = "SELECT * FROM cars WHERE id = " + carId;
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (DB != null) {
             cursor = DB.rawQuery(query, null);
         }
         return cursor;
