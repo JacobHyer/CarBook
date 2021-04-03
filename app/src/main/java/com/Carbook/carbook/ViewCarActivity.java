@@ -21,7 +21,10 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     private RecyclerView recyclerView;
     private DBHelper db;
     private Car car;
-    private TextView carMileage;
+    private TextView tvTitle;
+    private TextView tvSubtitle;
+    private TextView tvCarMileage;
+    private ImageView ivCarImage;
     public static final String TAG = "ViewCarActivity";
     private MaintenanceAdapter maintenanceAdapter;
 
@@ -43,10 +46,10 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
             }
         }
 
-        TextView tvTitle =  findViewById(R.id.tvTitle);
-        TextView tvSubtitle = findViewById(R.id.tvSubtitle);
-        TextView tvCarMileage = findViewById(R.id.tvCarMileage);
-        ImageView ivCarImage = findViewById(R.id.ivCarImage);
+        tvTitle =  findViewById(R.id.tvTitle);
+        tvSubtitle = findViewById(R.id.tvSubtitle);
+        tvCarMileage = findViewById(R.id.tvCarMileage);
+        ivCarImage = findViewById(R.id.ivCarImage);
         CarbookUtil.buildCardView(car, tvTitle, tvSubtitle, tvCarMileage, ivCarImage);
 
         recyclerView = findViewById(R.id.rvMaintenanceList);
@@ -96,7 +99,7 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
             //As cv will not refresh, new mileage is sent via intent and card is updated
             car.setMileage(intent.getIntExtra(MileageActivity.EXTRA_MILEAGE, -1));
             if (car.getMileage() != -1) {
-                carMileage.setText(car.getFormattedMileage());
+                tvCarMileage.setText(car.getFormattedMileage());
             }
         }
     }
