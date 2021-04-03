@@ -21,7 +21,6 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     private RecyclerView recyclerView;
     private DBHelper db;
     private Car car;
-    private Button btnUpdateMileage;
     private TextView carMileage;
 
     private MaintenanceAdapter maintenanceAdapter;
@@ -54,8 +53,6 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         carMileage = findViewById(R.id.tvCarMileage);
         carMileage.setText(car.getFormattedMileage());
         car.showImg(findViewById(R.id.ivCarImage));
-
-        btnUpdateMileage = findViewById(R.id.btnUpdateMileage);
 
         recyclerView = findViewById(R.id.rvMaintenanceList);
 
