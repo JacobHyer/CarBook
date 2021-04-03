@@ -152,7 +152,7 @@ public class Car implements Serializable {
     }
 
     public String getFormattedMileage() {
-        if (mileage == -1) return "";
+        if (mileage <= 0) return "";
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(mileage) + " mi.";
     }

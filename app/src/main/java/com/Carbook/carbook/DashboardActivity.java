@@ -102,7 +102,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
             customAdapter.notifyItemRangeChanged(position, carList.size());
 
             String name = c.getNickname();
-            if(name.isEmpty() || name == null) { name = c.getFormattedDesc(); }
+            if(name == null || name.isEmpty()) { name = c.getFormattedDesc(); }
             Toast.makeText(this, name + " deleted", Toast.LENGTH_SHORT).show();
         }
         else {

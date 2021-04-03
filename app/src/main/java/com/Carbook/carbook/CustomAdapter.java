@@ -34,7 +34,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        CarbookUtil.buildCardView(holder, carList.get(position));
+        TextView tvTitle =  holder.itemView.findViewById(R.id.tvTitle);
+        TextView tvSubtitle = holder.itemView.findViewById(R.id.tvSubtitle);
+        TextView tvCarMileage = holder.itemView.findViewById(R.id.tvCarMileage);
+        ImageView ivCarImage = holder.itemView.findViewById(R.id.ivCarImage);
+        CarbookUtil.buildCardView(carList.get(position), tvTitle, tvSubtitle, tvCarMileage, ivCarImage);
     }
 
     @Override
