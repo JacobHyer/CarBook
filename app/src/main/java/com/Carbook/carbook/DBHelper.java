@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
     public final String CARS_TABLE = "cars";
@@ -33,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //SQL statement of the maintenance table creation
         DB.execSQL("CREATE TABLE maintenance(id_m INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " description TEXT UNIQUE," +
+                " description TEXT NOT NULL," +
                 " notes TEXT NOT NULL," +
                 " mileage INT(9) NOT NULL," +
                 " date_m DATE NOT NULL," +
@@ -55,11 +58,16 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.execSQL("DROP TABLE IF EXISTS maintenance");
     }
 
+    public String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
     public boolean insertCar(Car car) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues car_data = new ContentValues();
-
-        java.util.Date writeTime = new java.util.Date();
 
         car_data.put("vin", car.getVin());
         car_data.put("name", car.getNickname());
@@ -67,7 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
         car_data.put("model", car.getModel());
         car_data.put("year", car.getYear());
         car_data.put("mileage", car.getMileage());
-        car_data.put("mileage_date_changed", "");  //TODO: Insert today's date when adding a new car
+        car_data.put("mileage_date_changed", getDateTime());
         car_data.put("avg_miles", car.getAvgMiles());
         car_data.put("image", car.getImage());
 
@@ -90,6 +98,54 @@ public class DBHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
+    }
+
+    public boolean clearMaintItems(List<MaintenanceItem> itemList) {
+        for (MaintenanceItem mi : itemList) {
+            if (deleteMaintenance(mi.getId())) {
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Car createCarObject(Cursor cursor) {
+        Car c = new Car(
+                cursor.getString(cursor.getColumnIndex("vin")),
+                cursor.getString(cursor.getColumnIndex("make")),
+                cursor.getString(cursor.getColumnIndex("model")),
+                cursor.getString(cursor.getColumnIndex("year")),
+                cursor.getInt(cursor.getColumnIndex("mileage")),
+                cursor.getInt(cursor.getColumnIndex("avg_miles")),
+                cursor.getString(cursor.getColumnIndex("image")),
+                cursor.getString(cursor.getColumnIndex("name"))
+        );
+        //save db id to Car object for easier reference to db later
+        c.setId(cursor.getLong(cursor.getColumnIndex("id")));
+        //Add all saved MIs to car object (for clean deletion in Dashboard Activity)
+        Cursor miCursor = getMaintItems((int)c.getId());
+        if (cursor.getCount() == 0) {
+        } else {
+            while (miCursor.moveToNext()) {
+                MaintenanceItem mi = createMaintObject(miCursor);
+                c.addMaintenanceItem(mi);
+            }
+        }
+        return c;
+    }
+
+    public MaintenanceItem createMaintObject(Cursor cursor) {
+        MaintenanceItem mi = new MaintenanceItem(
+                cursor.getString(cursor.getColumnIndex("description")),
+                cursor.getString(cursor.getColumnIndex("notes")),
+                cursor.getInt(cursor.getColumnIndex("mileage")),
+                cursor.getString(cursor.getColumnIndex("date_m")),
+                cursor.getInt(cursor.getColumnIndex("car_id"))
+        );
+        //save db id to MaintenanceItem object for easier reference to db later
+        mi.setId(cursor.getInt(cursor.getColumnIndex("id_m")));
+        return mi;
     }
 
     public boolean updateField(String table, long id, String column, String value) {
@@ -124,12 +180,45 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean deleteMaintenance(int id_m) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int result = db.delete(MAINTENANCE_ITEM_TABLE, "id_m=" + id_m, null);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public Cursor getCars() {
         String query = "SELECT * FROM cars";
         SQLiteDatabase DB = this.getReadableDatabase();
 
         Cursor cursor = null;
         if(DB != null) {
+            cursor = DB.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor getOneCar(long carId) {
+        String query = "SELECT * FROM cars WHERE id = " + carId;
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (DB != null) {
+            cursor = DB.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor getMaintItems(int carId) {
+        String query = "SELECT * FROM maintenance WHERE car_id = " + carId;
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (DB != null) {
             cursor = DB.rawQuery(query, null);
         }
         return cursor;

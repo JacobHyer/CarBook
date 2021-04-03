@@ -13,10 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.MaintenanceViewHolder>{
-    private List<MaintenanceItem> maintenanceItemList;
 
-    public MaintenanceAdapter(Context context, List<MaintenanceItem> maintenanceItemList) {
+    private Context context;
+    private List<MaintenanceItem> maintenanceItemList;
+    private RecyclerViewClickInterface rvci;
+
+    public MaintenanceAdapter(Context context, List<MaintenanceItem> maintenanceItemList, RecyclerViewClickInterface rvci) {
+        this.context = context;
         this.maintenanceItemList = maintenanceItemList;
+        this.rvci = rvci;
     }
 
     @NonNull
@@ -33,6 +38,7 @@ public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.
         holder.desc_txt.setText(mi.getDescription());
         holder.notes_txt.setText(mi.getNotes());
         holder.mileage_txt.setText(mi.getFormattedMileage());
+        holder.date_text.setText(mi.getFormattedDate());
     }
 
     @Override
@@ -41,13 +47,29 @@ public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.
     }
 
     public class MaintenanceViewHolder extends RecyclerView.ViewHolder {
-        TextView desc_txt, notes_txt, mileage_txt;
+        TextView desc_txt, notes_txt, mileage_txt, date_text;
 
         public MaintenanceViewHolder(@NonNull View itemView) {
             super(itemView);
             desc_txt = itemView.findViewById(R.id.tvMaintenanceItemDesc);
             notes_txt = itemView.findViewById(R.id.tvMaintenanceItemNotes);
             mileage_txt = itemView.findViewById(R.id.tvMaintenanceItemMileage);
+            date_text = itemView.findViewById(R.id.tvMaintenanceItemDate);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    rvci.onItemClick(getAdapterPosition());
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    rvci.onLongItemClick(getAdapterPosition());
+                    return true;
+                }
+            });
         }
 
     }

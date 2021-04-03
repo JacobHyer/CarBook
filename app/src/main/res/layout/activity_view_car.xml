@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
+
     <Button
         android:id="@+id/btnUpdateMileage"
         android:layout_width="0dp"
@@ -44,15 +45,55 @@
         tools:layout_conversion_absoluteHeight="194dp"
         tools:layout_conversion_absoluteWidth="411dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddMaint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:onClick="addMaintenanceItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add" />-->
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:fab_addButtonColorNormal="#3b5998"
+        app:fab_addButtonColorPressed="#3b5998"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:fab_expandDirection="up"
+        app:fab_labelsPosition="left"
+        app:fab_labelStyle="@style/LabelStyle"
+        tools:ignore="MissingConstraints">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_maintenance"
+            app:fab_colorNormal="#fff"
+            app:fab_colorPressed="#fff"
+            app:fab_size="normal"
+            app:fab_title="Add Maintenance"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddMaint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="updateMileage"
+            app:fab_icon="@drawable/ic_mileage"
+            app:fab_colorNormal="#fff"
+            app:fab_colorPressed="#fff"
+            app:fab_size="normal"
+            app:fab_title="Update Mileage"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

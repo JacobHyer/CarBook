@@ -1,12 +1,14 @@
 package com.Carbook.carbook;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class MaintenanceItem {
+public class MaintenanceItem implements Serializable {
     private String description;
     private String notes;
     private String date_maintenance;
     private int mileage;
+    private int id_m;
 
 
     public MaintenanceItem(String description, String notes, int mileage, String date_maintenance, int car_id) {
@@ -44,8 +46,20 @@ public class MaintenanceItem {
 
     public void setDateMaintenance(String date_maintenance) { this.date_maintenance = date_maintenance; }
 
+    public int getId() {
+        return id_m;
+    }
+
+    public void setId(int id_m) {
+        this.id_m = id_m;
+    }
+
     public String getFormattedMileage() {
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(mileage) + " mi.";
+    }
+
+    public String getFormattedDate() {
+        return "Completed: " + date_maintenance;
     }
 }
