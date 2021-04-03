@@ -95,15 +95,17 @@ public class MileageActivity extends AppCompatActivity {
         //TODO: We may want to consolidate all code into this format to have this activity update the databases, then create the intent specific to which activity needs to be opened (based on request codes?)
         //Request code 2 signifies that saving will need to return the user to the DashboardActivity
         Intent intent = null;
-        if (calledBy != null && calledBy == MileageNotification.TAG) {
+        if (calledBy != null && calledBy.equals(MileageNotification.TAG)) {
             intent = new Intent(this, MileageNotification.class);
-        } else if (calledBy != null && calledBy == ViewCarActivity.TAG) {
+        } else if (calledBy != null && calledBy.equals(ViewCarActivity.TAG)) {
             intent = new Intent(this, ViewCarActivity.class);
-        } else if (calledBy != null && calledBy == AddCarActivity.TAG) {
+        } else if (calledBy != null && calledBy.equals(AddCarActivity.TAG)) {
             //Will finish and send back to AddCarActivity since there is no entry in the database for the new car
             intent = new Intent(this, AddCarActivity.class);
             intent.putExtra(EXTRA_MILEAGE, miles);
             intent.putExtra(EXTRA_AVG_MILEAGE, milesAvg);
+            System.out.println(EXTRA_MILEAGE + ":" + miles);
+            System.out.println(EXTRA_AVG_MILEAGE + ":" + milesAvg);
             setResult(1, intent);
             finish();
         }
