@@ -16,10 +16,10 @@ public class MileageActivity extends AppCompatActivity {
     private EditText userMileage;
     private EditText userAvg;
     private DBHelper db;
-    private int miles;
-    private int milesAvg;
+    private int miles = -1;
+    private int milesAvg = -1;
     private String calledBy;
-    private long carId;
+    private long carId = -1;
 
     public static final String EXTRA_MILEAGE = "MILEAGE";
     public static final String EXTRA_AVG_MILEAGE = "AVG_MILEAGE";
@@ -32,10 +32,12 @@ public class MileageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         //Used to identify if the activity was started from a notification or from an activity
         calledBy = intent.getStringExtra("uniqueId");
-        carId = intent.getLongExtra("carId", -1);
-        miles = intent.getIntExtra(EXTRA_MILEAGE, 0);
-        milesAvg = intent.getIntExtra(EXTRA_AVG_MILEAGE, 0);
-
+        //Only check other intents if parent Activity isn't AddCarActivity
+        if (calledBy != null && !calledBy.equals(AddCarActivity.TAG)) {
+            carId = intent.getLongExtra("carId", -1);
+            miles = intent.getIntExtra(EXTRA_MILEAGE, 0);
+            milesAvg = intent.getIntExtra(EXTRA_AVG_MILEAGE, 0);
+        }
 
         db = new DBHelper(this);
 
@@ -93,7 +95,6 @@ public class MileageActivity extends AppCompatActivity {
 
     public void saveMileage(View view) {
         //TODO: We may want to consolidate all code into this format to have this activity update the databases, then create the intent specific to which activity needs to be opened (based on request codes?)
-        //Request code 2 signifies that saving will need to return the user to the DashboardActivity
         Intent intent = null;
         if (calledBy != null && calledBy.equals(MileageNotification.TAG)) {
             intent = new Intent(this, MileageNotification.class);
@@ -104,8 +105,6 @@ public class MileageActivity extends AppCompatActivity {
             intent = new Intent(this, AddCarActivity.class);
             intent.putExtra(EXTRA_MILEAGE, miles);
             intent.putExtra(EXTRA_AVG_MILEAGE, milesAvg);
-            System.out.println(EXTRA_MILEAGE + ":" + miles);
-            System.out.println(EXTRA_AVG_MILEAGE + ":" + milesAvg);
             setResult(1, intent);
             finish();
         }
@@ -118,6 +117,7 @@ public class MileageActivity extends AppCompatActivity {
         } else {
             //Result code 0 signifies that the update failed
             setResult(0, intent);
+            finish();
         }
     }
 
