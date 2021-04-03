@@ -11,6 +11,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -60,22 +61,32 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
     }
 
     public void saveItem(View view) {
+        car.addMaintenanceItem(
+                maintDesc.getText().toString(),
+                maintNote.getText().toString(),
+                Integer.parseInt(maintMileage.getText().toString()),
+                dateText.getText().toString(),
+                (int)car.getId()
+        );
+
         item.setDescription(maintDesc.getText().toString());
         item.setNotes(maintNote.getText().toString());
         item.setDateMaintenance(dateText.getText().toString());
         item.setMileage(Integer.parseInt(maintMileage.getText().toString()));
+
         Boolean success = db.insertMaintenance(car, item);
         if (success) {
             Intent intent = new Intent(this, ViewCarActivity.class);
-            setResult(2, intent);
-            finish();
+            intent.putExtra("car", car);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Save failed", Toast.LENGTH_SHORT);
         }
     }
 
     public void cancelItem(View view) {
         Intent intent = new Intent(this, ViewCarActivity.class);
-        intent.putExtra("CAR", car);
-        setResult(0, intent);
-        finish();
+        intent.putExtra("car", car);
+        startActivity(intent);
     }
 }
