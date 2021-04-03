@@ -100,6 +100,7 @@ public class MileageActivity extends AppCompatActivity {
             intent = new Intent(this, MileageNotification.class);
         } else if (calledBy != null && calledBy.equals(ViewCarActivity.TAG)) {
             intent = new Intent(this, ViewCarActivity.class);
+            intent.putExtra(EXTRA_MILEAGE, miles);
         } else if (calledBy != null && calledBy.equals(AddCarActivity.TAG)) {
             //Will finish and send back to AddCarActivity since there is no entry in the database for the new car
             intent = new Intent(this, AddCarActivity.class);
