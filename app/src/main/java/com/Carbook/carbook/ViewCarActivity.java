@@ -21,10 +21,7 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     private RecyclerView recyclerView;
     private DBHelper db;
     private Car car;
-    private Button btnUpdateMileage;
     private TextView carMileage;
-    public static final String EXTRA_MILEAGE = "MILEAGE";
-    public static final String EXTRA_AVG_MILEAGE = "AVG_MILEAGE";
     public static final String TAG = "ViewCarActivity";
     private MaintenanceAdapter maintenanceAdapter;
 
@@ -35,7 +32,6 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_car);
 
-        CarbookUtil.buildCardView(this, car);
         db = new DBHelper(this);
         Long carId = getIntent().getLongExtra("carId", -1);
         Cursor carCursor = db.getOneCar(carId);
@@ -47,7 +43,13 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
             }
         }
 
-        btnUpdateMileage = findViewById(R.id.btnUpdateMileage); //todo: need this?
+        TextView tvTitle =  findViewById(R.id.tvTitle);
+        TextView tvSubtitle = findViewById(R.id.tvSubtitle);
+        TextView tvCarMileage = findViewById(R.id.tvCarMileage);
+        ImageView ivCarImage = findViewById(R.id.ivCarImage);
+        CarbookUtil.buildCardView(car, tvTitle, tvSubtitle, tvCarMileage, ivCarImage);
+
+        carMileage = findViewById(R.id.tvCarMileage);
         recyclerView = findViewById(R.id.rvMaintenanceList);
 
         //clears maintenance list so only items from database will be read (avoid duplicates)
