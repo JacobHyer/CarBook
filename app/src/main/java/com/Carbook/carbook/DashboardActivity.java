@@ -35,7 +35,8 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                Car c = new Car(
+                Car c = myDB.createCarObject(cursor);
+                /*Car c = new Car(
                         cursor.getString(cursor.getColumnIndex("vin")),
                         cursor.getString(cursor.getColumnIndex("make")),
                         cursor.getString(cursor.getColumnIndex("model")),
@@ -46,7 +47,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
                         cursor.getString(cursor.getColumnIndex("name"))
                         );
                         //save db id to Car object for easier reference to db later
-                        c.setId(cursor.getLong(cursor.getColumnIndex("id")));
+                        c.setId(cursor.getLong(cursor.getColumnIndex("id")));*/
                 carList.add(c);
             }
         }
@@ -89,7 +90,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
 
     public void viewCar (Car c) {
         Intent intent = new Intent(this, ViewCarActivity.class);
-        intent.putExtra("car", c);
+        intent.putExtra("carId", c.getId());
         startActivity(intent);
     }
 

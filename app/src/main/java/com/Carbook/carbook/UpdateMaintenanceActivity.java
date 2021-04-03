@@ -77,7 +77,7 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
         Boolean success = db.insertMaintenance(car, item);
         if (success) {
             Intent intent = new Intent(this, ViewCarActivity.class);
-            intent.putExtra("car", car);
+            intent.putExtra("carId", car.getId());
             startActivity(intent);
         } else {
             Toast.makeText(this, "Save failed", Toast.LENGTH_SHORT);
@@ -86,7 +86,7 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
 
     public void cancelItem(View view) {
         Intent intent = new Intent(this, ViewCarActivity.class);
-        intent.putExtra("car", car);
+        intent.putExtra("carId", car.getId());
         startActivity(intent);
     }
 }
