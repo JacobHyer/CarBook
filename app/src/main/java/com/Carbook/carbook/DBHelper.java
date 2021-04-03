@@ -141,4 +141,15 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
+    public Cursor getMaintItems() {
+        String query = "SELECT * FROM maintenance";
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (DB != null) {
+            cursor = DB.rawQuery(query, null);
+        }
+        return cursor;
+    }
 }
