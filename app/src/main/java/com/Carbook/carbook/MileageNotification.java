@@ -41,6 +41,7 @@ public class MileageNotification extends AppCompatActivity {
     }
 
     public void selectYes(View view) {
+        //TODO: Fix diffDays based on new date format from db
         long diffDays = (car.getMileageChanged().getTimeInMillis())
                 - (Calendar.getInstance().getTimeInMillis())
                 / (24 * 60 *60 * 1000); //converts milliseconds to days
