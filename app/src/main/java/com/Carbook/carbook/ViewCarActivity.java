@@ -22,27 +22,35 @@ public class ViewCarActivity extends AppCompatActivity {
     private DBHelper db;
     private Car car;
     private Button btnUpdateMileage;
+    private TextView carMileage;
 
     public static final String TAG = "ViewCarActivity";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO: Delete this section when db table is set up
-        // Car object for testing
-        System.out.println("View Car Activity Started");
-        car = (Car)getIntent().getSerializableExtra("car");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_car);
+
+        db = new DBHelper(this);
+        Long carId = getIntent().getLongExtra("carId", -1);
+        Cursor carCursor = db.getOneCar(carId);
+        if (carCursor.getCount() == 0) {
+            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+        } else {
+            while (carCursor.moveToNext()) {
+                car = db.createCarObject(carCursor);
+            }
+        }
 
         TextView field;
         field = findViewById(R.id.tvNickname);
         field.setText(car.getNickname());
         field = findViewById(R.id.tvCarDesc);
         field.setText(car.getFormattedDesc());
-        field = findViewById(R.id.tvCarMileage);
-        field.setText(car.getFormattedMileage());
+        carMileage = findViewById(R.id.tvCarMileage);
+        carMileage.setText(car.getFormattedMileage());
         car.showImg(findViewById(R.id.ivCarImage));
 
         btnUpdateMileage = findViewById(R.id.btnUpdateMileage);
@@ -56,13 +64,13 @@ public class ViewCarActivity extends AppCompatActivity {
             iterator.next();
             iterator.remove();
         }
-        db = new DBHelper(this);
+
         Cursor cursor = db.getMaintItems((int)car.getId());
         if(cursor.getCount() == 0) {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                System.out.println(cursor.getString(cursor.getColumnIndex("description")));
+                //System.out.println(cursor.getString(cursor.getColumnIndex("description")));
                 car.addMaintenanceItem(
                         cursor.getString(cursor.getColumnIndex("description")),
                         cursor.getString(cursor.getColumnIndex("notes")),
@@ -96,18 +104,15 @@ public class ViewCarActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        //TODO: fix mileage functionality
+        //TODO: fix mileage functionality (mileage also needs to change on cv after update)
         super.onActivityResult(requestCode, resultCode, intent);
-        System.out.println(requestCode);
-        System.out.println(resultCode);
 
         //Request code 1 is for updating mileage on car
         if (requestCode == 1 && resultCode == 1) {
             //car.setMileage(intent.getIntExtra(MileageActivity.EXTRA_MILEAGE, -1));
             //car.setAvgMiles(intent.getIntExtra(MileageActivity.EXTRA_AVG_MILEAGE, -1));
             if (car.getMileage() != -1) {
-                TextView mileage = findViewById(R.id.tvCarMileage);
-                mileage.setText(car.getFormattedMileage());
+                carMileage.setText(car.getFormattedMileage());
             }
             /*Boolean success = db.updateField("cars", car.getId(), "mileage", String.valueOf(car.getMileage()));
             if(success) success = db.updateField("cars", car.getId(), "avg_miles", String.valueOf(car.getAvgMiles()));
