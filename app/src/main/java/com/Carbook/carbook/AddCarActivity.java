@@ -36,6 +36,8 @@ public class AddCarActivity extends AppCompatActivity {
     private AddCarActivity activity;
     private Car newCar;
 
+    public static final String TAG = "AddCarActivity";
+
     DBHelper DB;
 
     @Override
@@ -128,7 +130,7 @@ public class AddCarActivity extends AppCompatActivity {
 
     public void enterMileage(View view) {
         Intent intent = new Intent(this, MileageActivity.class);
-        intent.putExtra("CAR", newCar);
+        intent.putExtra("uniqueId", TAG);
         startActivityForResult(intent, 1);
     }
 
@@ -138,8 +140,8 @@ public class AddCarActivity extends AppCompatActivity {
 
         //Request code 1 is for entering mileage on new car
         if (requestCode == 1) {
-            newCar.setMileage(intent.getIntExtra("MILEAGE", -1));
-            newCar.setAvgMiles(intent.getIntExtra("AVG_MILEAGE", -1));
+            newCar.setMileage(intent.getIntExtra(MileageActivity.EXTRA_MILEAGE, -1));
+            newCar.setAvgMiles(intent.getIntExtra(MileageActivity.EXTRA_AVG_MILEAGE, -1));
             newCar.setMileageChanged(Calendar.getInstance());
             if (newCar.getMileage() != -1) {
                 carMileage.setText(newCar.getFormattedMileage());

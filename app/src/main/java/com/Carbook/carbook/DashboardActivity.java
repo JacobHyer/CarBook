@@ -42,18 +42,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
             emptyView.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
-                Car c = new Car(
-                        cursor.getString(cursor.getColumnIndex("vin")),
-                        cursor.getString(cursor.getColumnIndex("make")),
-                        cursor.getString(cursor.getColumnIndex("model")),
-                        cursor.getString(cursor.getColumnIndex("year")),
-                        cursor.getInt(cursor.getColumnIndex("mileage")),
-                        cursor.getInt(cursor.getColumnIndex("avg_miles")),
-                        cursor.getString(cursor.getColumnIndex("image")),
-                        cursor.getString(cursor.getColumnIndex("name"))
-                        );
-                        //save db id to Car object for easier reference to db later
-                        c.setId(cursor.getLong(cursor.getColumnIndex("id")));
+                Car c = myDB.createCarObject(cursor);
                 carList.add(c);
             }
         }
@@ -90,6 +79,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
         intent.putExtra("CAR", c);
         startActivity(intent);
     }
+
     public void addCar (View view) {
         Intent intent = new Intent(this, AddCarActivity.class);
         startActivity(intent);
@@ -97,14 +87,14 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
 
     public void viewCar (Car c) {
         Intent intent = new Intent(this, ViewCarActivity.class);
-        intent.putExtra("car", c);
+        intent.putExtra("carId", c.getId());
         startActivity(intent);
     }
 
     public void deleteCar (int position) {
         Car c = carList.get(position);
 
-        if(myDB.deleteCar(c.getId())) { // if DB delete succeeds, remove from view and show toast
+        if(myDB.clearMaintItems(c.getMaintenanceItemList()) && myDB.deleteCar(c.getId())) { // if DB delete succeeds, remove from view and show toast
             carList.remove(c);
             recyclerView.removeViewAt(position);
             customAdapter.notifyItemRemoved(position);
