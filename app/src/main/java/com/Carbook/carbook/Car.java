@@ -114,9 +114,13 @@ public class Car implements Serializable {
         this.id = id;
     }
 
-    public void addMaintenanceItem(String description, String notes, int mileage, String date_maintenance, int car_id) {
-        maintenanceItemList.add(new MaintenanceItem(description, notes, mileage, date_maintenance, car_id));
+    public void addMaintenanceItem(MaintenanceItem mi) {
+        maintenanceItemList.add(mi);
     }
+
+    /*public void addMaintenanceItem(String description, String notes, int mileage, String date_maintenance, int car_id) {
+        maintenanceItemList.add(new MaintenanceItem(description, notes, mileage, date_maintenance, car_id));
+    }*/
 
     public List<MaintenanceItem> getMaintenanceItemList() {
         return maintenanceItemList;

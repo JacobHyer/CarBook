@@ -13,21 +13,38 @@
         android:text="Oil Change"
         android:textColor="@color/black"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvMaintenanceItemMileage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="185dp"
+        android:layout_height="19dp"
         android:layout_marginTop="8dp"
-        android:text="4800 mi."
+        android:text="4800 miles"
+        android:textAlignment="textEnd"
         android:textColor="@color/dark_gray"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvMaintenanceItemDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemDesc"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvMaintenanceItemDate"
+        android:layout_width="194dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:text="Completed: 4/1/2021"
+        android:textColor="@color/dark_gray"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvMaintenanceItemMileage"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemDesc"
         app:layout_constraintVertical_bias="0.0" />
@@ -38,10 +55,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="These are some notes about the maintenance."
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemMileage" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemMileage"
+        app:layout_constraintVertical_bias="0.692" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
