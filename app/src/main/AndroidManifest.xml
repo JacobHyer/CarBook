@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CarBook">
         <activity android:name=".MileageNotification"></activity>
-        <activity android:name=".UpdateMaintenanceActivity" />
+        <activity android:name=".UpdateMaintenanceActivity"
+            android:noHistory="true"/>
         <activity android:name=".MileageActivity" />
         <activity android:name=".AddCarActivity" />
         <activity android:name=".ViewCarActivity" />
