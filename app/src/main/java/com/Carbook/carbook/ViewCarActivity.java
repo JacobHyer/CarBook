@@ -49,7 +49,6 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         ImageView ivCarImage = findViewById(R.id.ivCarImage);
         CarbookUtil.buildCardView(car, tvTitle, tvSubtitle, tvCarMileage, ivCarImage);
 
-        carMileage = findViewById(R.id.tvCarMileage);
         recyclerView = findViewById(R.id.rvMaintenanceList);
 
         //clears maintenance list so only items from database will be read (avoid duplicates)
