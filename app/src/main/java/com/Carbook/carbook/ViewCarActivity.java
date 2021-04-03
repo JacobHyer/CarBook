@@ -1,6 +1,7 @@
 package com.Carbook.carbook;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Iterator;
 
 public class ViewCarActivity extends AppCompatActivity {
 
@@ -27,9 +30,8 @@ public class ViewCarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //TODO: Delete this section when db table is set up
         // Car object for testing
+        System.out.println("View Car Activity Started");
         car = (Car)getIntent().getSerializableExtra("car");
-        car.addMaintenanceItem("Oil change", "Oil change at Jiffy Lube. Recommend transmission service.", 20000, "2021/03/28", 1);
-        car.addMaintenanceItem("Tire rotation", null, 22500, "2021/03/15", 1);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_car);
@@ -43,14 +45,31 @@ public class ViewCarActivity extends AppCompatActivity {
         field.setText(car.getFormattedMileage());
         car.showImg(findViewById(R.id.ivCarImage));
 
-        //TODO: Set image
-
         btnUpdateMileage = findViewById(R.id.btnUpdateMileage);
 
         recyclerView = findViewById(R.id.rvMaintenanceList);
 
+        //clears maintenance list so only items from database will be read (avoid duplicates)
+        //using Iterator to avoid ConcurrentModificationException
+        for( Iterator<MaintenanceItem> iterator = car.getMaintenanceItemList().iterator(); iterator.hasNext();) {
+            iterator.remove();
+        }
         db = new DBHelper(this);
-        //TODO: Add cursor loop when db table is ready (see DashboardActivity)
+        Cursor cursor = db.getMaintItems((int)car.getId());
+        if(cursor.getCount() == 0) {
+            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                System.out.println(cursor.getString(cursor.getColumnIndex("description")));
+                car.addMaintenanceItem(
+                        cursor.getString(cursor.getColumnIndex("description")),
+                        cursor.getString(cursor.getColumnIndex("notes")),
+                        cursor.getInt(cursor.getColumnIndex("mileage")),
+                        cursor.getString(cursor.getColumnIndex("date_m")),
+                        cursor.getInt(cursor.getColumnIndex("car_id"))
+                );
+            }
+        }
 
         MaintenanceAdapter maintenanceAdapter = new MaintenanceAdapter(this, car.getMaintenanceItemList());
         recyclerView.setAdapter(maintenanceAdapter);
@@ -62,7 +81,7 @@ public class ViewCarActivity extends AppCompatActivity {
     public void addMaintenanceItem(View view) {
         Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
         intent.putExtra("CAR", car);
-        startActivityForResult(intent, 2);
+        startActivity(intent);
     }
 
     public void updateMileage(View view) {
@@ -78,6 +97,7 @@ public class ViewCarActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         System.out.println(requestCode);
         System.out.println(resultCode);
+
         //Request code 1 is for updating mileage on car
         if (requestCode == 1 && resultCode == 1) {
             //car.setMileage(intent.getIntExtra(MileageActivity.EXTRA_MILEAGE, -1));
