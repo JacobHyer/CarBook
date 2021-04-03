@@ -49,4 +49,8 @@ public class MaintenanceItem implements Serializable {
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(mileage) + " mi.";
     }
+
+    public String getFormattedDate() {
+        return "Completed: " + date_maintenance;
+    }
 }
