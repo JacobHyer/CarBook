@@ -35,7 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //SQL statement of the maintenance table creation
         DB.execSQL("CREATE TABLE maintenance(id_m INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " description TEXT UNIQUE," +
+                " description TEXT NOT NULL," +
                 " notes TEXT NOT NULL," +
                 " mileage INT(9) NOT NULL," +
                 " date_m DATE NOT NULL," +
@@ -142,8 +142,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getMaintItems() {
-        String query = "SELECT * FROM maintenance";
+    public Cursor getMaintItems(int carId) {
+        String query = "SELECT * FROM maintenance WHERE car_id = " + carId;
         SQLiteDatabase DB = this.getReadableDatabase();
 
         Cursor cursor = null;
