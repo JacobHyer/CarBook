@@ -60,23 +60,16 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
     }
 
     public void saveItem(View view) {
-        //TODO: Save maintenance item to the database/car object
-        /*item.setDescription(maintDesc.getText().toString());
+        item.setDescription(maintDesc.getText().toString());
         item.setNotes(maintNote.getText().toString());
+        item.setDateMaintenance(dateText.getText().toString());
         item.setMileage(Integer.parseInt(maintMileage.getText().toString()));
-        //TODO: Calendars for maint and see if IDs can be put as same type
-        item.setDateMaintenance("test");
-        item.setCarId((int)(car.getId()));
-        System.out.println(item.getNotes());
-        System.out.println(item.getMileage());
-        System.out.println(item.getDateMaintenance());
-        System.out.println(item.getCarId());
-        Boolean success = db.insertMaintenance(item);
+        Boolean success = db.insertMaintenance(car, item);
         if (success) {
             Intent intent = new Intent(this, ViewCarActivity.class);
             setResult(2, intent);
             finish();
-        }*/
+        }
     }
 
     public void cancelItem(View view) {
