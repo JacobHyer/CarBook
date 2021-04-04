@@ -9,10 +9,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,7 +22,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
     CardView emptyView;
 
     DBHelper myDB;
-    CustomAdapter customAdapter;
+    CarsAdapter carsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +53,8 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
             checkMileages(carList);
         }
 
-        customAdapter = new CustomAdapter(DashboardActivity.this, carList, this);
-        recyclerView.setAdapter(customAdapter);
+        carsAdapter = new CarsAdapter(DashboardActivity.this, carList, this);
+        recyclerView.setAdapter(carsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DashboardActivity.this));
 
     }
@@ -108,8 +106,8 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
                 myDB.deleteCar(c.getId())) { // if DB delete succeeds, remove from view and show toast
             carList.remove(c);
             recyclerView.removeViewAt(position);
-            customAdapter.notifyItemRemoved(position);
-            customAdapter.notifyItemRangeChanged(position, carList.size());
+            carsAdapter.notifyItemRemoved(position);
+            carsAdapter.notifyItemRangeChanged(position, carList.size());
 
             String name = c.getNickname();
             if(name == null || name.isEmpty()) { name = c.getFormattedDesc(); }
