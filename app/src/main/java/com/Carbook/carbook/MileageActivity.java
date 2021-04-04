@@ -10,6 +10,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+/**
+ * Adds or updates a car's current and average mileage
+ */
 public class MileageActivity extends AppCompatActivity {
 
     private EditText userMileage;
@@ -23,6 +26,11 @@ public class MileageActivity extends AppCompatActivity {
     public static final String EXTRA_MILEAGE = "MILEAGE";
     public static final String EXTRA_AVG_MILEAGE = "AVG_MILEAGE";
 
+    /**
+     * Sets up Activity. Populates vehicle's current mileage/average miles
+     * from the database if applicable. Sets all fields and listeners.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,9 +100,13 @@ public class MileageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Saves vehicle's mileage in the database. If the car is new, returns the mileage
+     * to the AddCarActivity for display instead of saving in the database.
+     * @param view
+     */
     public void saveMileage(View view) {
-        //TODO: We may want to consolidate all code into this format to have this activity update the databases, then create the intent specific to which activity needs to be opened (based on request codes?)
-        Intent intent = null;
+                Intent intent = null;
         if (calledBy != null && calledBy.equals(MileageNotification.TAG)) {
             intent = new Intent(this, MileageNotification.class);
         } else if (calledBy != null && calledBy.equals(ViewCarActivity.TAG)) {
@@ -121,6 +133,10 @@ public class MileageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Closes the activity and returns to previous Activity without saving mileage
+     * @param view
+     */
     public void cancelMileage(View view) {
         finish();
     }
