@@ -221,7 +221,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getMaintItems(int carId) {
-        String query = "SELECT * FROM maintenance WHERE car_id = " + carId;
+        String query = "SELECT * FROM maintenance WHERE car_id = " + carId +
+                " ORDER BY mileage DESC, date_m DESC";
         SQLiteDatabase DB = this.getReadableDatabase();
 
         Cursor cursor = null;
