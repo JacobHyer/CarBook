@@ -1,5 +1,6 @@
 package com.Carbook.carbook;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +23,6 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
     private EditText maintDesc;
     private EditText maintMileage;
     private EditText maintNote;
-    private MaintenanceItem item;
     private DBHelper db;
     private Car car;
     private int id_m;
@@ -31,11 +31,11 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance);
-        maintDesc = (EditText) findViewById(R.id.maint_descrip);
-        maintMileage = (EditText) findViewById(R.id.maint_mileage);
-        maintNote = (EditText) findViewById(R.id.maint_notes);
+        maintDesc = findViewById(R.id.maint_descrip);
+        maintMileage = findViewById(R.id.maint_mileage);
+        maintNote = findViewById(R.id.maint_notes);
 
-        dateText = (EditText) findViewById(R.id.editTextDate);
+        dateText = findViewById(R.id.editTextDate);
         dateText.setInputType(InputType.TYPE_NULL);
         dateText.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -59,7 +59,6 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
         db = new DBHelper(this);
         car = (Car)getIntent().getSerializableExtra("CAR");
         id_m = getIntent().getIntExtra("id_m", -1);
-        System.out.println(id_m);
         if (id_m != -1) {
             MaintenanceItem mi = (MaintenanceItem)getIntent().getSerializableExtra("mi");
             maintDesc.setText(mi.getDescription());
@@ -67,13 +66,18 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
             maintNote.setText(mi.getNotes());
             dateText.setText(mi.getDateMaintenance());
         }
-        item = new MaintenanceItem(null, null,-1,null,(int)(car.getId()));
     }
 
     public void saveItem(View view) {
-        Boolean success = null;
+        String desc = maintDesc.getText().toString();
+        String note = maintNote.getText().toString();
+        String date = dateText.getText().toString();
+        int miles = Integer.parseInt(maintMileage.getText().toString());
+        MaintenanceItem mi = new MaintenanceItem(desc, note, miles, date);
+
+        Boolean success;
         if (id_m == -1) {
-            success = db.insertMaintenance(car, item);
+            success = db.insertMaintenance(car, mi);
         } else {
             success = db.updateField("maintenance", id_m, "description", maintDesc.getText().toString());
             if(success) success = db.updateField("maintenance", id_m, "notes", maintNote.getText().toString());
@@ -81,9 +85,7 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
             if(success) success = db.updateField("maintenance", id_m, "mileage", maintMileage.getText().toString());
         }
         if (success) {
-            Intent intent = new Intent(this, ViewCarActivity.class);
-            intent.putExtra("carId", car.getId());
-            startActivity(intent);
+            finish();
         } else {
             Toast.makeText(this, "Save failed", Toast.LENGTH_SHORT);
         }

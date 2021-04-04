@@ -11,7 +11,7 @@ public class MaintenanceItem implements Serializable {
     private int id_m;
 
 
-    public MaintenanceItem(String description, String notes, int mileage, String date_maintenance, int car_id) {
+    public MaintenanceItem(String description, String notes, int mileage, String date_maintenance) {
         this.description = description;
         this.notes = notes;
         this.mileage = mileage;

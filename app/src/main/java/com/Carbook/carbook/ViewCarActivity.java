@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +26,6 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     private ImageView ivCarImage;
     public static final String TAG = "ViewCarActivity";
     private MaintenanceAdapter maintenanceAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +74,12 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         recyclerView.setAdapter(maintenanceAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
     public void addMaintenanceItem(View view) {
         Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
         intent.putExtra("CAR", car);
         intent.putExtra("id_m", -1);
-        startActivity(intent);
+        startActivityForResult(intent, 3);
     }
 
     public void updateMileage(View view) {
@@ -102,6 +101,12 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
             if (car.getMileage() != -1) {
                 tvCarMileage.setText(car.getFormattedMileage());
             }
+        }
+
+        //Request code 3 is for adding a maintenance item
+        if(requestCode == 3) {
+            recreate();
+            Toast.makeText(this, "Service event saved", Toast.LENGTH_SHORT);
         }
     }
 

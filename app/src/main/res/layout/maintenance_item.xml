@@ -20,41 +20,36 @@
 
     <TextView
         android:id="@+id/tvMaintenanceItemMileage"
-        android:layout_width="185dp"
+        android:layout_width="134dp"
         android:layout_height="19dp"
-        android:layout_marginTop="8dp"
         android:text="4800 miles"
         android:textAlignment="textEnd"
         android:textColor="@color/dark_gray"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvMaintenanceItemDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvMaintenanceItemDate"
-        app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemDesc"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/tvMaintenanceItemDate" />
 
     <TextView
         android:id="@+id/tvMaintenanceItemDate"
-        android:layout_width="194dp"
+        android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
         android:text="Completed: 4/1/2021"
         android:textColor="@color/dark_gray"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvMaintenanceItemMileage"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemDesc"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemDesc" />
 
     <TextView
         android:id="@+id/tvMaintenanceItemNotes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="These are some notes about the maintenance."
+        android:text="These are some notes about the maintenance. They could be very long. "
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

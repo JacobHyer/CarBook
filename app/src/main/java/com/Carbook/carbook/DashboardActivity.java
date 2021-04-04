@@ -95,7 +95,8 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
     public void deleteCar (int position) {
         Car c = carList.get(position);
 
-        if(myDB.clearMaintItems(c.getMaintenanceItemList()) && myDB.deleteCar(c.getId())) { // if DB delete succeeds, remove from view and show toast
+        if(myDB.clearMaintItems(c.getMaintenanceItemList()) &&
+                myDB.deleteCar(c.getId())) { // if DB delete succeeds, remove from view and show toast
             carList.remove(c);
             recyclerView.removeViewAt(position);
             customAdapter.notifyItemRemoved(position);

@@ -140,8 +140,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 cursor.getString(cursor.getColumnIndex("description")),
                 cursor.getString(cursor.getColumnIndex("notes")),
                 cursor.getInt(cursor.getColumnIndex("mileage")),
-                cursor.getString(cursor.getColumnIndex("date_m")),
-                cursor.getInt(cursor.getColumnIndex("car_id"))
+                cursor.getString(cursor.getColumnIndex("date_m"))
         );
         //save db id to MaintenanceItem object for easier reference to db later
         mi.setId(cursor.getInt(cursor.getColumnIndex("id_m")));
