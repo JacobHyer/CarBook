@@ -5,10 +5,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Background task to retrieve and display all models for a
+ * specified make/year combination
+ */
 public class ModelLookupTask implements Runnable{
 
     private AddCarActivity activity;
@@ -21,6 +24,10 @@ public class ModelLookupTask implements Runnable{
         this.params = params;
     }
 
+    /**
+     * Calls the API that provides all models. Populates the results
+     * in the Model selector on the AddCarActivity
+     */
     @Override
     public void run() {
         params.add(1, "/modelyear/");
@@ -44,6 +51,13 @@ public class ModelLookupTask implements Runnable{
         //Send list of models to the AddCarActivity for Spinner display
         populateModelSpinner(models);
     }
+
+    /**
+     * Helper function that makes the call to the API
+     * @param baseURL
+     * @param params
+     * @return
+     */
     private JSONArray nhtsaCall(String baseURL, List<String> params) {
         url += baseURL;
         for (int i = 0; i < params.size(); i++) {
@@ -65,6 +79,11 @@ public class ModelLookupTask implements Runnable{
         }
         return results;
     }
+
+    /**
+     * Notifies the AddCarActivity and supplies all models to the spinner
+     * @param list
+     */
     private void populateModelSpinner(List<String> list) {
         activity.runOnUiThread(new Runnable() {
             @Override
