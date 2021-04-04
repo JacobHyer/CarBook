@@ -152,7 +152,12 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(column, value);
-        int result = db.update(table, cv, "id =" + id, null);
+        int result = -1;
+        if (table == "cars") {
+            result = db.update(table, cv, "id =" + id, null);
+        } else if (table == "maintenance") {
+            result = db.update(table, cv, "id_m =" + id, null);
+        }
 
         if(result == -1) {
             return false;
