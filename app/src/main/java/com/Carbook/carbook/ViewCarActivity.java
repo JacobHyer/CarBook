@@ -48,8 +48,7 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         Long carId = getIntent().getLongExtra("carId", -1);
         Cursor carCursor = db.getOneCar(carId);
         if (carCursor.getCount() == 0) {
-            //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
-            //emptyView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.VISIBLE);
         } else {
             while (carCursor.moveToNext()) {
                 try {
@@ -80,7 +79,6 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
 
         Cursor cursor = db.getMaintItems((int)car.getId());
         if(cursor.getCount() == 0) {
-            //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
             emptyView.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
