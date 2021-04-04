@@ -14,6 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * In-app notification to the user that their mileage may need to be updated.
+ * Currently set to display every 30 days
+ */
 public class MileageNotification extends AppCompatActivity {
 
     private TextView carName;
@@ -21,6 +25,11 @@ public class MileageNotification extends AppCompatActivity {
 
     public static final String TAG = "MileageNotification";
 
+    /**
+     * Sets up display of notification. Size is 80% x 60% smaller than screen.
+     * Loads car's information to inform user which car they will be updating
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +52,16 @@ public class MileageNotification extends AppCompatActivity {
         getWindow().setLayout(width, height);
     }
 
+    /**
+     * Takes user to the update mileage screen. Estimates the current
+     * mileage of the car based on the time elapsed and average miles
+     * driven per week.
+     * For demonstration purposes, function currently compares to a
+     * static date instead of comparing to the actual date the mileage
+     * was last updated
+     * @param view
+     * @throws ParseException
+     */
     public void selectYes(View view) throws ParseException {
         Calendar dateChanged = Calendar.getInstance();
         //Actual code to pull from database is commented out for demonstration purposes
@@ -63,6 +82,12 @@ public class MileageNotification extends AppCompatActivity {
         intent.putExtra(MileageActivity.EXTRA_AVG_MILEAGE, car.getAvgMiles());
         startActivityForResult(intent, 2);
     }
+
+    /**
+     * Takes user back to the dashboard if they would not like to update mileage.
+     * Sets the compare date for the vehicle so that the notification shows again tomorrow.
+     * @param view
+     */
     public void selectNo(View view) {
         Intent intent = new Intent(this, DashboardActivity.class);
         //Change date of change to (today - 29) days to ensure it does not ask to be updated again until tomorrow
@@ -73,6 +98,13 @@ public class MileageNotification extends AppCompatActivity {
         db.updateField("cars", car.getId(),"mileage_date_changed", sdf.format(c.getTime()));
         startActivity(intent);
     }
+
+    /**
+     * Callback listener. Feeds information from mileage update back to dashboard.
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
