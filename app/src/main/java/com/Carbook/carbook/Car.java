@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * An object representing a vehicle.
+ */
 public class Car implements Serializable {
     @SerializedName("Make")
     private String make;
@@ -119,22 +122,18 @@ public class Car implements Serializable {
         maintenanceItemList.add(mi);
     }
 
-    /*public void addMaintenanceItem(String description, String notes, int mileage, String date_maintenance, int car_id) {
-        maintenanceItemList.add(new MaintenanceItem(description, notes, mileage, date_maintenance, car_id));
-    }*/
-
     public List<MaintenanceItem> getMaintenanceItemList() {
         return maintenanceItemList;
-    }
-
-    public void editMaintenanceItem() {
-
     }
 
     public void deleteMaintenanceItem(MaintenanceItem maintenanceItem) {
         maintenanceItemList.remove(maintenanceItem);
     }
 
+    /**
+     * Utility method to format the Car's saved image for display. Returns a generic icon if there is no image.
+     * @param iv the imageView where the image will be drawn
+     */
     public void showImg(ImageView iv) {
         if (this.image != null) {
             Picasso.get().load(this.image).fit().centerInside().error(R.drawable.car_icon).into(iv);
@@ -143,10 +142,18 @@ public class Car implements Serializable {
         }
     }
 
+    /**
+     * Generates a formatted version of the Car's description, i.e. Year, Make, and Model
+     * @return the formatted string
+     */
     public String getFormattedDesc() {
         return year + " " + make + " " + model;
     }
 
+    /**
+     * Generates a formatted String version of the car's mileage for display
+     * @return the formatted String
+     */
     public String getFormattedMileage() {
         if (mileage <= 0) return "";
         DecimalFormat formatter = new DecimalFormat("#,###");

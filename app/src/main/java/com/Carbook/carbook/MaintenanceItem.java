@@ -3,6 +3,9 @@ package com.Carbook.carbook;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 
+/**
+ * A maintenance task that has been performed on a Car.
+ */
 public class MaintenanceItem implements Serializable {
     private String description;
     private String notes;
@@ -54,11 +57,19 @@ public class MaintenanceItem implements Serializable {
         this.id_m = id_m;
     }
 
+    /**
+     * Generates a formatted String for the mileage at which the maintenance was performed
+     * @return the formatted String
+     */
     public String getFormattedMileage() {
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(mileage) + " mi.";
     }
 
+    /**
+     * Generates a formatted String to display the date the maintenance was performed
+     * @return the formatted String
+     */
     public String getFormattedDate() {
         return date_maintenance;
     }

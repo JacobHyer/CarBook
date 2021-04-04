@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
+public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.MyViewHolder> {
     private Context context;
     private List<Car> carList;
     private RecyclerViewClickInterface recyclerViewClickInterface;
 
-    public CustomAdapter(Context context, List<Car> carList, RecyclerViewClickInterface recyclerViewClickInterface) {
+    public CarsAdapter(Context context, List<Car> carList, RecyclerViewClickInterface recyclerViewClickInterface) {
         this.context = context;
         this.carList = carList;
         this.recyclerViewClickInterface = recyclerViewClickInterface;

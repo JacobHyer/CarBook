@@ -4,7 +4,10 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -59,6 +62,7 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
         db = new DBHelper(this);
         car = (Car)getIntent().getSerializableExtra("CAR");
         id_m = getIntent().getIntExtra("id_m", -1);
+        maintMileage.setText(String.valueOf(car.getMileage()));
         if (id_m != -1) {
             MaintenanceItem mi = (MaintenanceItem)getIntent().getSerializableExtra("mi");
             maintDesc.setText(mi.getDescription());
@@ -84,8 +88,13 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
             if(success) success = db.updateField("maintenance", id_m, "date_m", dateText.getText().toString());
             if(success) success = db.updateField("maintenance", id_m, "mileage", maintMileage.getText().toString());
         }
+
         if (success) {
-            finish();
+            if(miles > car.getMileage()) {
+                showMileageAlert(miles);
+            } else {
+                finish();
+            }
         } else {
             Toast.makeText(this, "Save failed", Toast.LENGTH_SHORT);
         }
@@ -95,5 +104,27 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ViewCarActivity.class);
         intent.putExtra("carId", car.getId());
         startActivity(intent);
+    }
+
+    private void showMileageAlert(int mileage) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Update Mileage?");
+        alertBuilder.setMessage("Do you want to update your vehicle's mileage to " + mileage + "?");
+        alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                car.setMileage(mileage);
+                db.updateField(db.CARS_TABLE, car.getId(), "mileage", String.valueOf(mileage));
+                finish();
+            }
+        });
+
+        alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        alertBuilder.show();
     }
 }

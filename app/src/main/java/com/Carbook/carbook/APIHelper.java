@@ -7,6 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+/**
+ * HTTP handler for making API calls
+ */
 public class APIHelper {
 
     public String makeCall(String url) {

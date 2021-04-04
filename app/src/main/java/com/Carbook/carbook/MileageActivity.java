@@ -12,7 +12,6 @@ import android.widget.EditText;
 
 public class MileageActivity extends AppCompatActivity {
 
-
     private EditText userMileage;
     private EditText userAvg;
     private DBHelper db;
@@ -123,9 +122,6 @@ public class MileageActivity extends AppCompatActivity {
     }
 
     public void cancelMileage(View view) {
-        //TODO: Fix return to dashboard from notification
-        Intent intent = new Intent(this, AddCarActivity.class);
-        setResult(0, intent);
         finish();
     }
 }
