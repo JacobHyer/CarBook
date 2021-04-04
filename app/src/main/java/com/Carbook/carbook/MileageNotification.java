@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MileageNotification extends AppCompatActivity {
 
@@ -40,16 +43,23 @@ public class MileageNotification extends AppCompatActivity {
         getWindow().setLayout(width, height);
     }
 
-    public void selectYes(View view) {
-        //TODO: Fix diffDays based on new date format from db
-        long diffDays = (car.getMileageChanged().getTimeInMillis())
-                - (Calendar.getInstance().getTimeInMillis())
-                / (24 * 60 *60 * 1000); //converts milliseconds to days
-        int estimatedMiles = (int)((car.getAvgMiles() / 7) * diffDays); //Converts car's avgMiles to avgMiles per day, then multiplies by diffDays
+    public void selectYes(View view) throws ParseException {
+        Calendar dateChanged = Calendar.getInstance();
+        //Actual code to pull from database is commented out for demonstration purposes
+        //dateChanged.setTime(car.getMileageChanged());
+        //Begin example code with fake past date
+        SimpleDateFormat ex_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date example = ex_format.parse("2021-02-25 00:00:00");
+        dateChanged.setTime(example);
+        //End example code
+        long diffDays = ((Calendar.getInstance().getTimeInMillis())
+                - (dateChanged.getTimeInMillis()))
+                / (24 * 60 * 60 * 1000); //converts milliseconds to days
+        int estimatedMiles = (int)((car.getAvgMiles() / 7) * diffDays); //Converts car's avgMiles to avgMiles per day, then multiplies
         Intent intent = new Intent(this, MileageActivity.class);
         intent.putExtra("uniqueId", TAG);
         intent.putExtra("carId", car.getId());
-        intent.putExtra(MileageActivity.EXTRA_MILEAGE, estimatedMiles);
+        intent.putExtra(MileageActivity.EXTRA_MILEAGE, (estimatedMiles + car.getMileage()));
         intent.putExtra(MileageActivity.EXTRA_AVG_MILEAGE, car.getAvgMiles());
         startActivityForResult(intent, 2);
     }
@@ -58,7 +68,9 @@ public class MileageNotification extends AppCompatActivity {
         //Change date of change to (today - 29) days to ensure it does not ask to be updated again until tomorrow
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, -29);
-        //TODO: Save the new date in the database
+        DBHelper db = new DBHelper(this);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        db.updateField("cars", car.getId(),"mileage_date_changed", sdf.format(c.getTime()));
         startActivity(intent);
     }
     @Override

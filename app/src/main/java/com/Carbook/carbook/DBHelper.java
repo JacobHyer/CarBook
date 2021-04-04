@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -110,13 +111,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Car createCarObject(Cursor cursor) {
+    public Car createCarObject(Cursor cursor) throws ParseException {
         Car c = new Car(
                 cursor.getString(cursor.getColumnIndex("vin")),
                 cursor.getString(cursor.getColumnIndex("make")),
                 cursor.getString(cursor.getColumnIndex("model")),
                 cursor.getString(cursor.getColumnIndex("year")),
                 cursor.getInt(cursor.getColumnIndex("mileage")),
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
+                        cursor.getString(cursor.getColumnIndex("mileage_date_changed"))),
                 cursor.getInt(cursor.getColumnIndex("avg_miles")),
                 cursor.getString(cursor.getColumnIndex("image")),
                 cursor.getString(cursor.getColumnIndex("name"))

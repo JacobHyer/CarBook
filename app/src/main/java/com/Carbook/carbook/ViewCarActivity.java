@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.util.Iterator;
 
 public class ViewCarActivity extends AppCompatActivity implements RecyclerViewClickInterface {
@@ -40,7 +41,11 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         } else {
             while (carCursor.moveToNext()) {
-                car = db.createCarObject(carCursor);
+                try {
+                    car = db.createCarObject(carCursor);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

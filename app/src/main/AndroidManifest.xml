@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarBook">
-        <activity android:name=".MileageNotification"></activity>
+        <activity android:name=".MileageNotification"
+            android:noHistory="true"></activity>
         <activity android:name=".UpdateMaintenanceActivity"
             android:noHistory="true"/>
         <activity android:name=".MileageActivity" />
