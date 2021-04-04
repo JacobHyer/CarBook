@@ -16,6 +16,9 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.util.Iterator;
 
+/**
+ * Shows a selected car with its details and maintenance log.
+ */
 public class ViewCarActivity extends AppCompatActivity implements RecyclerViewClickInterface {
 
     private RecyclerView recyclerView;
@@ -28,6 +31,11 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     public static final String TAG = "ViewCarActivity";
     private MaintenanceAdapter maintenanceAdapter;
 
+    /**
+     * Sets up the Activity. Reads a car from the database and sets up its cardview.
+     * Reads the maintenance log from the database and builds the recyclerview.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -80,14 +88,20 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void addMaintenanceItem(View view) {
+    /**
+     * Launches UpdateMaintenanceActivity, passing the car
+     */
+    public void addMaintenanceItem() {
         Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
         intent.putExtra("CAR", car);
         intent.putExtra("id_m", -1);
         startActivityForResult(intent, 3);
     }
 
-    public void updateMileage(View view) {
+    /**
+     * Launches MileageActivity with a uniqueId to indicate this is an edit for an existing car
+     */
+    public void updateMileage() {
         Intent intent = new Intent(this, MileageActivity.class);
         intent.putExtra("uniqueId", TAG);
         intent.putExtra("carId", car.getId());
@@ -96,6 +110,12 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         startActivityForResult(intent, 1);
     }
 
+    /**
+     * Callback listener. Redraws the page when MaintenanceActivity was launched.
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if(requestCode == 3) {
@@ -104,14 +124,22 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         }
     }
 
-    public void viewItem(MaintenanceItem mi) {
+    /**
+     * Launches UpdateMaintenanceActivity to edit or view an existing maintenanceitem
+     * @param maintenanceItem the
+     */
+    public void viewItem(MaintenanceItem maintenanceItem) {
         Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
         intent.putExtra("CAR", car);
-        intent.putExtra("id_m", mi.getId());
-        intent.putExtra("mi", mi);
+        intent.putExtra("id_m", maintenanceItem.getId());
+        intent.putExtra("mi", maintenanceItem);
         startActivityForResult(intent, 4);
     }
 
+    /**
+     *  Deletes a maintenance item
+     * @param position the item's position in the list
+     */
     public void deleteItem(int position) {
         MaintenanceItem mi = car.getMaintenanceItemList().get(position);
 
@@ -127,11 +155,19 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         }
     }
 
+    /**
+     * Custom onclick listener to launch maintenance item view/edit from the recyclerview list
+     * @param position the item's position in the list
+     */
     @Override
     public void onItemClick(int position) {
         viewItem(car.getMaintenanceItemList().get(position));
     }
 
+    /**
+     * Custom on long item click listener for the recyclerview
+     * @param position the item's position in the list
+     */
     @Override
     public void onLongItemClick(int position) {
         deleteItem(position);

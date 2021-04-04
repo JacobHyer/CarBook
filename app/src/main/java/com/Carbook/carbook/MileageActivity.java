@@ -12,7 +12,6 @@ import android.widget.EditText;
 
 public class MileageActivity extends AppCompatActivity {
 
-
     private EditText userMileage;
     private EditText userAvg;
     private DBHelper db;
