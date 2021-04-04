@@ -87,11 +87,6 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
         }
     }
 
-    /*
-        test() and testIntent() are both for demonstration purposes only as it would be difficult to
-        demonstrate the notifications that are only sent 30 days after mileage is changed
-    */
-
     /**
      * For demonstration purposes only as it would be difficult to demonstrate the notifications
      * that are only sent 30 days after mileage is changed. Triggered by a small button bottom left of dashboard.
