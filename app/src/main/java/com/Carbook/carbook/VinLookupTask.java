@@ -10,6 +10,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Background task to retrieve make/model/year for a car
+ * with the specified VIN
+ */
 public class VinLookupTask implements Runnable {
 
     private AddCarActivity activity;
@@ -22,6 +26,10 @@ public class VinLookupTask implements Runnable {
         this.params = params;
     }
 
+    /**
+     * Makes asks for call to the API, then creates a new Car
+     * object from the results. Car is sent back to AddCarActivity
+     */
     @Override
     public void run() {
         JSONObject vinResults = nhtsaCall(vinBaseURL, params);
@@ -31,6 +39,13 @@ public class VinLookupTask implements Runnable {
         sendCar(c);
         }
 
+    /**
+     * Helper function to make the call to the API. Returns "stripped"
+     * away results
+     * @param baseURL
+     * @param params
+     * @return
+     */
     private JSONObject nhtsaCall(String baseURL, List<String> params) {
         //Make API call and return JSONObject of car details
         url += baseURL;
@@ -54,6 +69,11 @@ public class VinLookupTask implements Runnable {
         }
         return values;
     }
+
+    /**
+     * Sends car back to AddCarActivity
+     * @param car
+     */
     private void sendCar(Car car) {
         activity.runOnUiThread(new Runnable() {
             @Override
