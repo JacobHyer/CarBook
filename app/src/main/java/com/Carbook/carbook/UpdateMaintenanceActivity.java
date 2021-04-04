@@ -1,12 +1,10 @@
 package com.Carbook.carbook;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -19,6 +17,9 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+/**
+ * Screen where user can add or edit service logs
+ */
 public class UpdateMaintenanceActivity extends AppCompatActivity {
 
     private DatePickerDialog picker;
@@ -30,6 +31,10 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
     private Car car;
     private int id_m;
 
+    /**
+     * Creates activity. Populates all fields from database if editing a previous service log.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +77,12 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Saves log entry to the local car object and in the database.
+     * If mileage entered is greater than the current mileage of the car,
+     * asks user if they would like to update the car's mileage
+     * @param view
+     */
     public void saveItem(View view) {
         String desc = maintDesc.getText().toString();
         String note = maintNote.getText().toString();
@@ -100,12 +111,20 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Returns user to the previous activity without updating item
+     * @param view
+     */
     public void cancelItem(View view) {
         Intent intent = new Intent(this, ViewCarActivity.class);
         intent.putExtra("carId", car.getId());
         startActivity(intent);
     }
 
+    /**
+     * Creates alert to ask user if they would like to update their vehicle's mileage.
+     * @param mileage
+     */
     private void showMileageAlert(int mileage) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("Update Mileage?");
