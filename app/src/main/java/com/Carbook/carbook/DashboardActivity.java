@@ -26,8 +26,6 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
     DBHelper myDB;
     CustomAdapter customAdapter;
 
-    //TODO: If nickname is null/empty, put car description in name textView
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
