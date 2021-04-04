@@ -4,6 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * This class was created to facilitate processing of images search in API.
+ */
+
 public class ImageLookupTask implements Runnable{
 
     private AddCarActivity activity;

@@ -13,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * Adapter responsible for making a view for each item
+ * in the Recyclerview from the Dashboard.
+ */
+
 public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.MyViewHolder> {
     private Context context;
     private List<Car> carList;

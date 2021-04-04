@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * This class is to assist us in database control and to create and update our database.
+ */
+
 public class DBHelper extends SQLiteOpenHelper {
     public final String CARS_TABLE = "cars";
     public final String MAINTENANCE_ITEM_TABLE = "maintenance";
