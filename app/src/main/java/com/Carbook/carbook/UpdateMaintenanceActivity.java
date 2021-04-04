@@ -59,6 +59,7 @@ public class UpdateMaintenanceActivity extends AppCompatActivity {
         db = new DBHelper(this);
         car = (Car)getIntent().getSerializableExtra("CAR");
         id_m = getIntent().getIntExtra("id_m", -1);
+        maintMileage.setText(String.valueOf(car.getMileage()));
         if (id_m != -1) {
             MaintenanceItem mi = (MaintenanceItem)getIntent().getSerializableExtra("mi");
             maintDesc.setText(mi.getDescription());
