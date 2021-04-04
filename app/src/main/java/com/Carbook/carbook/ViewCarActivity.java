@@ -79,6 +79,7 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     public void addMaintenanceItem(View view) {
         Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
         intent.putExtra("CAR", car);
+        intent.putExtra("id_m", -1);
         startActivity(intent);
     }
 
@@ -105,7 +106,11 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     }
 
     public void viewItem(MaintenanceItem mi) {
-        //TODO: Change to populate the fields in UpdateMaintenanceActivity
+        Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
+        intent.putExtra("CAR", car);
+        intent.putExtra("id_m", mi.getId());
+        intent.putExtra("mi", mi);
+        startActivity(intent);
     }
 
     public void deleteItem(int position) {
