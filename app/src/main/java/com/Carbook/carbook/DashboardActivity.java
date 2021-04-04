@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Activity for the main Dashboard view of the application. Contains a list of all cars, and a button to add more.
+ */
+
 public class DashboardActivity extends AppCompatActivity implements RecyclerViewClickInterface {
     private List<Car> carList;
     RecyclerView recyclerView;
@@ -24,6 +28,10 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
     DBHelper myDB;
     CarsAdapter carsAdapter;
 
+    /**
+     * Sets up the activity. Instantiates a RecyclerView for the list of cars.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,11 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(DashboardActivity.this));
 
     }
+
+    /**
+     * Checks when mileage of all cars was last updated, and fires an alert if it has been more than 30 days.
+     * @param list List of all Cars
+     */
     private void checkMileages (List<Car> list) {
         Calendar today = Calendar.getInstance();
         for (Car c : list) {
@@ -73,32 +86,66 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
             }
         }
     }
-    //test() and testIntent() are both for demonstration purposes only as it would be difficult to
-    //demonstrate the notifications that are only sent 30 days after mileage is changed
+
+    /*
+        test() and testIntent() are both for demonstration purposes only as it would be difficult to
+        demonstrate the notifications that are only sent 30 days after mileage is changed
+    */
+
+    /**
+     * For demonstration purposes only as it would be difficult to demonstrate the notifications
+     * that are only sent 30 days after mileage is changed. Triggered by a small button bottom left of dashboard.
+      * @param view
+     */
     public void test(View view) {
         testIntent(carList.get(0));
     }
-    public void testIntent(Car c) {
+
+    /**
+     * For demonstration purposes only as it would be difficult to demonstrate the notifications
+     * that are only sent 30 days after mileage is changed. Triggered by a small button bottom left of dashboard.
+     * @param car Car object to fire the test notification on
+     */
+    public void testIntent(Car car) {
         Intent intent = new Intent(this, MileageNotification.class);
-        intent.putExtra("CAR", c);
+        intent.putExtra("CAR", car);
         startActivityForResult(intent, 1);
     }
+
+    /**
+     * Callback function that redraws the dashboard when returning from another activity
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         recreate();
     }
-    public void addCar (View view) {
+
+    /**
+     * Launches AddCarActivity when add button is clicked
+     */
+    public void addCar() {
         Intent intent = new Intent(this, AddCarActivity.class);
         startActivity(intent);
     }
 
-    public void viewCar (Car c) {
+    /**
+     * Launches ViewCarActivity when a car card is clicked
+     * @param car the Car
+     */
+    public void viewCar (Car car) {
         Intent intent = new Intent(this, ViewCarActivity.class);
-        intent.putExtra("carId", c.getId());
+        intent.putExtra("carId", car.getId());
         startActivity(intent);
     }
 
+    /**
+     * Deletes a car from the database and removes it from the view
+     * @param position the position of the recyclerview the selected car is at
+     */
     public void deleteCar (int position) {
         Car c = carList.get(position);
 
@@ -118,11 +165,19 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
         }
     }
 
+    /**
+     * Custom click listener for a car card. Launches viewCar
+     * @param position
+     */
     @Override
     public void onItemClick(int position) {
         viewCar(carList.get(position));
     }
 
+    /**
+     * Custom long click listener for a car card. Deletes the car.
+     * @param position
+     */
     @Override
     public void onLongItemClick(int position) {
         //TODO: Set edit to long press. Make delete a button inside edit view.
