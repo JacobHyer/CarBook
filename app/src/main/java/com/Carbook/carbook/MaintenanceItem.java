@@ -60,6 +60,6 @@ public class MaintenanceItem implements Serializable {
     }
 
     public String getFormattedDate() {
-        return "Completed: " + date_maintenance;
+        return date_maintenance;
     }
 }

@@ -5,22 +5,39 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f2f2f2"
     android:fitsSystemWindows="true"
     tools:context=".ViewCarActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/cv_car"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/empty_view"
+        android:layout_width="379dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/dark_gray"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        tools:ignore="MissingConstraints">
 
+        <TextView
+            android:id="@+id/empty_txt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f2f2f2"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/no_data_available_maintenance"
+            android:textSize="16sp"
+            android:textStyle="italic" />
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMaintenanceList"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="375dp"
+        android:layout_height="539dp"
+        android:layout_marginTop="40dp"
         android:scrollbars="vertical"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,36 +55,44 @@
         android:layout_marginBottom="16dp"
         app:fab_addButtonColorNormal="#3b5998"
         app:fab_addButtonColorPressed="#3b5998"
+        app:fab_expandDirection="up"
+        app:fab_labelStyle="@style/LabelStyle"
+        app:fab_labelsPosition="left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:fab_expandDirection="up"
-        app:fab_labelsPosition="left"
-        app:fab_labelStyle="@style/LabelStyle"
         tools:ignore="MissingConstraints">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="addMaintenanceItem"
-            app:fab_icon="@drawable/ic_maintenance"
             app:fab_colorNormal="#fff"
             app:fab_colorPressed="#fff"
+            app:fab_icon="@drawable/ic_maintenance"
             app:fab_size="normal"
-            app:fab_title="Add Maintenance"/>
+            app:fab_title="Add Maintenance" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnUpdateMileage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="updateMileage"
-            app:fab_icon="@drawable/ic_mileage"
             app:fab_colorNormal="#fff"
             app:fab_colorPressed="#fff"
+            app:fab_icon="@drawable/ic_mileage"
             app:fab_size="normal"
-            app:fab_title="Update Mileage"/>
+            app:fab_title="Update Mileage" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/cv_car"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

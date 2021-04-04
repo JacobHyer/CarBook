@@ -2,6 +2,115 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:layout_marginBottom="15dp"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvCar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#e1e1f6"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="89dp"
+                android:layout_height="21dp"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="Completed"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMaintenanceItemDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="Oil Change"
+                android:textColor="#3b5998"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMaintenanceItemMileage"
+                android:layout_width="243dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="4800 miles"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemDesc" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="19dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="15dp"
+                android:padding="0dp"
+                android:text="|"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvMaintenanceItemDate"
+                app:layout_constraintStart_toEndOf="@+id/tvMaintenanceItemDate"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMaintenanceItemDate"
+                android:layout_width="89dp"
+                android:layout_height="31dp"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="4/1/2021"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/tvMaintenanceItemNotes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="These are some notes about the maintenance. They could be very long. "
+                android:textColor="#3b5998"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemDate" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!--
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -57,4 +166,4 @@
         app:layout_constraintTop_toBottomOf="@+id/tvMaintenanceItemMileage"
         app:layout_constraintVertical_bias="0.692" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>-->

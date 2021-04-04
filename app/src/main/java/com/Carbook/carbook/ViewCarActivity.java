@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     private TextView tvSubtitle;
     private TextView tvCarMileage;
     private ImageView ivCarImage;
+    CardView emptyView;
     public static final String TAG = "ViewCarActivity";
     private MaintenanceAdapter maintenanceAdapter;
 
@@ -38,7 +40,8 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         Long carId = getIntent().getLongExtra("carId", -1);
         Cursor carCursor = db.getOneCar(carId);
         if (carCursor.getCount() == 0) {
-            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            //emptyView.setVisibility(View.VISIBLE);
         } else {
             while (carCursor.moveToNext()) {
                 try {
@@ -56,6 +59,8 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         CarbookUtil.buildCardView(car, tvTitle, tvSubtitle, tvCarMileage, ivCarImage);
 
         recyclerView = findViewById(R.id.rvMaintenanceList);
+        emptyView = findViewById(R.id.empty_view);
+
 
         //clears maintenance list so only items from database will be read (avoid duplicates)
         //using Iterator to avoid ConcurrentModificationException
@@ -67,7 +72,8 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
 
         Cursor cursor = db.getMaintItems((int)car.getId());
         if(cursor.getCount() == 0) {
-            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            emptyView.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
                 MaintenanceItem mi = db.createMaintObject(cursor);
