@@ -91,7 +91,7 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     /**
      * Launches UpdateMaintenanceActivity, passing the car
      */
-    public void addMaintenanceItem() {
+    public void addMaintenanceItem(View view) {
         Intent intent = new Intent(this, UpdateMaintenanceActivity.class);
         intent.putExtra("CAR", car);
         intent.putExtra("id_m", -1);
@@ -101,7 +101,7 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
     /**
      * Launches MileageActivity with a uniqueId to indicate this is an edit for an existing car
      */
-    public void updateMileage() {
+    public void updateMileage(View view) {
         Intent intent = new Intent(this, MileageActivity.class);
         intent.putExtra("uniqueId", TAG);
         intent.putExtra("carId", car.getId());

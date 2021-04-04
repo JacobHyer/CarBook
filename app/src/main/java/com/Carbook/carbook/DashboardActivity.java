@@ -127,7 +127,7 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
     /**
      * Launches AddCarActivity when add button is clicked
      */
-    public void addCar() {
+    public void addCar(View view) {
         Intent intent = new Intent(this, AddCarActivity.class);
         startActivity(intent);
     }
