@@ -1,11 +1,7 @@
 package com.Carbook.carbook;
 
-import android.app.Activity;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.Picasso;
@@ -13,7 +9,7 @@ import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Car implements Serializable {
@@ -25,20 +21,20 @@ public class Car implements Serializable {
     private String year;
     private String vin;
     private int mileage;
-    private Calendar dateChanged;
+    private Date dateChanged;
     private int avg_miles;
     private String image;
     private String nickname;
     private List<MaintenanceItem> maintenanceItemList;
     private long id;
 
-    public Car(String vin, String make, String model, String year, int mileage, int avg_miles, String image, String nickname) {
+    public Car(String vin, String make, String model, String year, int mileage, Date dateChanged, int avg_miles, String image, String nickname) {
         this.vin = vin;
         this.make = make;
         this.model = model;
         this.year = year;
         this.mileage = mileage;
-        this.dateChanged = null;
+        this.dateChanged = dateChanged;
         this.avg_miles = avg_miles;
         this.image = image;
         this.nickname = nickname;
@@ -89,9 +85,9 @@ public class Car implements Serializable {
         this.mileage = mileage;
     }
 
-    public Calendar getMileageChanged() { return dateChanged; }
+    public Date getMileageChanged() { return dateChanged; }
 
-    public void setMileageChanged(Calendar date) {
+    public void setMileageChanged(Date date) {
         this.dateChanged = date;
     }
 

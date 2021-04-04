@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -43,7 +44,12 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
             emptyView.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
-                Car c = myDB.createCarObject(cursor);
+                Car c = null;
+                try {
+                    c = myDB.createCarObject(cursor);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 carList.add(c);
             }
         }
@@ -59,7 +65,8 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
     private void checkMileages (List<Car> list) {
         Calendar today = Calendar.getInstance();
         for (Car c : list) {
-            Calendar test = c.getMileageChanged();
+            Calendar test = Calendar.getInstance();
+            test.setTime(c.getMileageChanged());
             if (test != null) {
                 test.add(Calendar.DATE, 30);
                 if (today.compareTo(test) > 0) {
@@ -78,9 +85,13 @@ public class DashboardActivity extends AppCompatActivity implements RecyclerView
     public void testIntent(Car c) {
         Intent intent = new Intent(this, MileageNotification.class);
         intent.putExtra("CAR", c);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        recreate();
+    }
     public void addCar (View view) {
         Intent intent = new Intent(this, AddCarActivity.class);
         startActivity(intent);

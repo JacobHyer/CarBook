@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.util.Iterator;
 
 public class ViewCarActivity extends AppCompatActivity implements RecyclerViewClickInterface {
@@ -40,7 +41,11 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         } else {
             while (carCursor.moveToNext()) {
-                car = db.createCarObject(carCursor);
+                try {
+                    car = db.createCarObject(carCursor);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -93,19 +98,9 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+        recreate();
 
-        //Request code 1 is for updating mileage on car
-        if (requestCode == 1 && resultCode == 1) {
-            //As cv will not refresh, new mileage is sent via intent and card is updated
-            car.setMileage(intent.getIntExtra(MileageActivity.EXTRA_MILEAGE, -1));
-            if (car.getMileage() != -1) {
-                tvCarMileage.setText(car.getFormattedMileage());
-            }
-        }
-
-        //Request code 3 is for adding a maintenance item
         if(requestCode == 3) {
-            recreate();
             Toast.makeText(this, "Service event saved", Toast.LENGTH_SHORT);
         }
     }
@@ -115,7 +110,7 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
         intent.putExtra("CAR", car);
         intent.putExtra("id_m", mi.getId());
         intent.putExtra("mi", mi);
-        startActivity(intent);
+        startActivityForResult(intent, 4);
     }
 
     public void deleteItem(int position) {

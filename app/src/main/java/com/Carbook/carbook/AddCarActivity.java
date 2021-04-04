@@ -19,6 +19,7 @@ import org.apache.commons.text.WordUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AddCarActivity extends AppCompatActivity {
@@ -53,7 +54,7 @@ public class AddCarActivity extends AppCompatActivity {
         carImage = findViewById(R.id.ivCarImage);
         modelValues = new ArrayList<>();
         activity = this;
-        newCar = new Car(null,null,null,null,-1, -1, null, null);
+        newCar = new Car(null,null,null,null,-1, null,-1, null, null);
 
         DB = new DBHelper(this );
 
@@ -143,7 +144,8 @@ public class AddCarActivity extends AppCompatActivity {
         if (requestCode == 1) {
             newCar.setMileage(intent.getIntExtra(MileageActivity.EXTRA_MILEAGE, -1));
             newCar.setAvgMiles(intent.getIntExtra(MileageActivity.EXTRA_AVG_MILEAGE, -1));
-            newCar.setMileageChanged(Calendar.getInstance());
+            /*newCar.setMileageChanged(new Date());
+            System.out.println(newCar.getMileageChanged());*/
             if (newCar.getMileage() != -1) {
                 carMileage.setText(newCar.getFormattedMileage());
             }
