@@ -98,9 +98,8 @@ public class ViewCarActivity extends AppCompatActivity implements RecyclerViewCl
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        recreate();
-
         if(requestCode == 3) {
+            recreate();
             Toast.makeText(this, "Service event saved", Toast.LENGTH_SHORT);
         }
     }
